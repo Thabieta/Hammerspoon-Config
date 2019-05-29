@@ -34,49 +34,33 @@ function locate()
 				]])
 end
 -- 保存本地曲目的专辑封面
+local script = [[
+			try
+				tell application "iTunes"
+					set theartwork to raw data of current track's artwork 1
+					set theformat to format of current track's artwork 1
+					if theformat is «class PNG » then
+						set ext to ".png"
+					else
+						set ext to ".jpg"
+					end if
+				end tell
+				set fileName to ("Macintosh HD:Users:userName:.hammerspoon:" & "currentartwork" & ext)
+				set outFile to open for access file fileName with write permission
+				set eof outFile to 0
+				write theartwork to outFile
+				close access outFile
+			end try
+					]]
 if owner == "鳳凰院カミのMacBook Pro" then
-	saveartworkscript = [[
-			try
-				tell application "iTunes"
-					set theartwork to raw data of current track's artwork 1
-					set theformat to format of current track's artwork 1
-					if theformat is «class PNG » then
-						set ext to ".png"
-					else
-						set ext to ".jpg"
-					end if
-				end tell
-				set fileName to ("Macintosh HD:Users:hououinkami:.hammerspoon:" & "currentartwork" & ext)
-				set outFile to open for access file fileName with write permission
-				set eof outFile to 0
-				write theartwork to outFile
-				close access outFile
-			end try
-					]]
+	saveartworkscript = script:gsub("userName","hououinkami")
 else
-	saveartworkscript = [[
-			try
-				tell application "iTunes"
-					set theartwork to raw data of current track's artwork 1
-					set theformat to format of current track's artwork 1
-					if theformat is «class PNG » then
-						set ext to ".png"
-					else
-						set ext to ".jpg"
-					end if
-				end tell
-				set fileName to ("Macintosh HD:Users:cynthia:.hammerspoon:" & "currentartwork" & ext)
-				set outFile to open for access file fileName with write permission
-				set eof outFile to 0
-				write theartwork to outFile
-				close access outFile
-			end try
-					]]
+	saveartworkscript = script:gsub("userName","cynthia")
 end
 function saveartwork()
 	if hs.itunes.getCurrentAlbum() ~= songalbum then
 		songalbum = hs.itunes.getCurrentAlbum()
-hs.osascript.applescript(saveartworkscript)
+	hs.osascript.applescript(saveartworkscript)
 	end
 end
 -- 获取AppleMusic曲目的专辑封面
