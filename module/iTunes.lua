@@ -4,6 +4,66 @@ local songloved = nil
 local songdisliked = nil
 local songrating = nil
 local songalbum = nil
+local owner = hs.host.localizedName()
+if owner == "鳳凰院カミのMacBook Pro" then
+	saveartworkscript = [[
+			try
+				tell application "iTunes"
+					set theartwork to raw data of current track's artwork 1
+					set theformat to format of current track's artwork 1
+					if theformat is «class PNG » then
+						set ext to ".png"
+					else
+						set ext to ".jpg"
+					end if
+				end tell
+				set fileName to ("Macintosh HD:Users:hououinkami:.hammerspoon:" & "currentartwork" & ext)
+				set outFile to open for access file fileName with write permission
+				set eof outFile to 0
+				write theartwork to outFile
+				close access outFile
+			end try
+					]]
+	lovedmenu = {title = lovedtitle, fn = function() hs.osascript.applescript([[
+						tell application "iTunes"
+							if current track's loved is false then
+								set current track's loved to true
+							else
+								set current track's loved to false
+							end if
+						end tell
+						]]) end}
+	dislikedmenu = {title = dislikedtitle, fn = function() hs.osascript.applescript([[
+						tell application "iTunes"
+							if current track's disliked is false then
+								set current track's disliked to true
+							else
+								set current track's disliked to false
+							end if
+						end tell
+						]]) end}
+else
+	saveartworkscript = [[
+			try
+				tell application "iTunes"
+					set theartwork to raw data of current track's artwork 1
+					set theformat to format of current track's artwork 1
+					if theformat is «class PNG » then
+						set ext to ".png"
+					else
+						set ext to ".jpg"
+					end if
+				end tell
+				set fileName to ("Macintosh HD:Users:cynthia:.hammerspoon:" & "currentartwork" & ext)
+				set outFile to open for access file fileName with write permission
+				set eof outFile to 0
+				write theartwork to outFile
+				close access outFile
+			end try
+					]]
+	lovedmenu = {}
+	dislikedmenu = {}
+end
 -- 删除Menubar
 function deletemenubar()
 	if iTunesBar ~= nil then
@@ -36,24 +96,7 @@ end
 function saveartwork()
 	if hs.itunes.getCurrentAlbum() ~= songalbum then
 		songalbum = hs.itunes.getCurrentAlbum()
-		hs.osascript.applescript([[
-			try
-				tell application "iTunes"
-					set theartwork to raw data of current track's artwork 1
-					set theformat to format of current track's artwork 1
-					if theformat is «class PNG » then
-						set ext to ".png"
-					else
-						set ext to ".jpg"
-					end if
-				end tell
-				set fileName to ("Macintosh HD:Users:hououinkami:.hammerspoon:" & "currentartwork" & ext)
-				set outFile to open for access file fileName with write permission
-				set eof outFile to 0
-				write theartwork to outFile
-				close access outFile
-			end try
-					]])
+hs.osascript.applescript(saveartworkscript)
 	end
 end
 -- 获取AppleMusic曲目的专辑封面
@@ -200,24 +243,8 @@ function setmenu()
 			{title = "👩🏻‍🎤" .. artist, fn = locate},
 			{title = "💿" .. album, fn = locate},
 			{title = "-"},
-			{title = lovedtitle, fn = function() hs.osascript.applescript([[
-						tell application "iTunes"
-							if current track's loved is false then
-								set current track's loved to true
-							else
-								set current track's loved to false
-							end if
-						end tell
-						]]) end},
-			{title = dislikedtitle, fn = function() hs.osascript.applescript([[
-						tell application "iTunes"
-							if current track's disliked is false then
-								set current track's disliked to true
-							else
-								set current track's disliked to false
-							end if
-						end tell
-						]]) end},
+			lovedmenu,
+			dislikesmenu,
 			{title = ratingtitle1, checked = star5, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 100]]) end},
 			{title = ratingtitle2, checked = star4, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 80]]) end},
 			{title = ratingtitle3, checked = star3, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 60]]) end},
