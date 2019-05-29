@@ -6,6 +6,7 @@ if owner == "鳳凰院カミのMacBook Pro" then
 else
 	base3 = { name = "Wikipedia", baseurl = "https://en.wikipedia.org/wiki/keyword", }
 	tip = "Enter the keywords you want to search"
+end
 local base = {
 		[1] = { name = "百度", baseurl = "https://www.baidu.com/s?wd=keyword", },
 		[2] = { name = "Google", baseurl = "https://www.google.com/search?q=keyword", },
