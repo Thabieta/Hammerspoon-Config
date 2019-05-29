@@ -247,7 +247,7 @@ function setmenu()
 			{title = "💿" .. album, fn = locate},
 			{title = "-"},
 			lovedmenu,
-			dislikesmenu,
+			dislikedmenu,
 			{title = ratingtitle1, checked = star5, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 100]]) end},
 			{title = ratingtitle2, checked = star4, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 80]]) end},
 			{title = ratingtitle3, checked = star3, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 60]]) end},
