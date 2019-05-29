@@ -25,5 +25,5 @@ local module_list = {
 	"module.window",
 		}
 for _, v in pairs(module_list) do
-	require v
+	require (v)
 end
