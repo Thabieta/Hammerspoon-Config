@@ -123,10 +123,3 @@ windowManagement({
 	--delete = reset,
 		})
 --]]
-hotkey.bind(hyper, 'right', function() Resize("halfright") end)
-hotkey.bind(hyper, 'left', function() Resize("halfleft") end) 
-hotkey.bind(hyper, 'up', function() Resize("halfup") end)
-hotkey.bind(hyper, 'down', function() Resize("halfdown") end)
-hotkey.bind(hyper, 'c', function() Resize("center") end)
-hotkey.bind(hyper, 'return', function() Resize("fullscreen") end)
-hotkey.bind(hyper, 'delete', function() Resize("reset") end)
