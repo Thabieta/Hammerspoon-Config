@@ -27,3 +27,4 @@ local module_list = {
 for _, v in pairs(module_list) do
 	require (v)
 end
+print("aaaaaaa")
