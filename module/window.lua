@@ -83,7 +83,7 @@ windowsManagement({
 		right = Resize.halfright,
 		up = Resize.halfup,
 		down = Resize.halfdown,
-		hs.keycodes.map[36] = Resize.fullscreen,
+		string.format(hs.keycodes.map[36]) = Resize.fullscreen,
 		delete = Resize.reset,
 	})
 --[[
