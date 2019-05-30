@@ -63,8 +63,7 @@ function saveartwork()
 	hs.osascript.applescript(saveartworkscript)
 	end
 end
--- 获取AppleMusic曲目的专辑封面
---local artworkurl = nil
+-- 获取Apple Music曲目的专辑封面
 function saveartworkam()
 	local album = hs.itunes.getCurrentAlbum()
 	local artist = hs.itunes.getCurrentArtist()
@@ -110,72 +109,31 @@ function setmenu()
 	else
 		dislikedtitle = "🖤好きじゃない"
 	end
+	local ratingtitle5 = "⭑⭑⭑⭑⭑"
+	local ratingtitle4 = "⭑⭑⭑⭑⭐︎"
+	local ratingtitle3 = "⭑⭑⭑⭐︎⭐︎"
+	local ratingtitle2 = "⭑⭑⭐︎⭐︎⭐︎"
+	local ratingtitle1 = "⭑⭐︎⭐︎⭐︎⭐︎"
+	local star5 = false
+	local star4 = false
+	local star3 = false
+	local star2 = false
+	local star1 = false
 	if rating == 100 then
-		ratingtitle1 = hs.styledtext.new("⭑⭑⭑⭑⭑", {color = {hex = "#0000FF", alpha = 1}})
-		ratingtitle2 = "⭑⭑⭑⭑⭐︎"
-		ratingtitle3 = "⭑⭑⭑⭐︎⭐︎"
-		ratingtitle4 = "⭑⭑⭐︎⭐︎⭐︎"
-		ratingtitle5 = "⭑⭐︎⭐︎⭐︎⭐︎"
+		ratingtitle5 = hs.styledtext.new("⭑⭑⭑⭑⭑", {color = {hex = "#0000FF", alpha = 1}})
 		star5 = true
-		star4 = false
-		star3 = false
-		star2 = false
-		star1 = false
 	elseif rating == 80 then
-		ratingtitle1 = "⭑⭑⭑⭑⭑"
-		ratingtitle2 = hs.styledtext.new("⭑⭑⭑⭑⭐︎", {color = {hex = "#0000FF", alpha = 1}})
-		ratingtitle3 = "⭑⭑⭑⭐︎⭐︎"
-		ratingtitle4 = "⭑⭑⭐︎⭐︎⭐︎"
-		ratingtitle5 = "⭑⭐︎⭐︎⭐︎⭐︎"
-		star5 = false
+		ratingtitle4 = hs.styledtext.new("⭑⭑⭑⭑⭐︎", {color = {hex = "#0000FF", alpha = 1}})
 		star4 = true
-		star3 = false
-		star2 = false
-		star1 = false
 	elseif rating == 60 then
-		ratingtitle1 = "⭑⭑⭑⭑⭑"
-		ratingtitle2 = "⭑⭑⭑⭑⭐︎"
 		ratingtitle3 = hs.styledtext.new("⭑⭑⭑⭐︎⭐︎", {color = {hex = "#0000FF", alpha = 1}})
-		ratingtitle4 = "⭑⭑⭐︎⭐︎⭐︎"
-		ratingtitle5 = "⭑⭐︎⭐︎⭐︎⭐︎"
-		star5 = false
-		star4 = false
 		star3 = true
-		star2 = false
-		star1 = false
 	elseif rating == 40 then
-		ratingtitle1 = "⭑⭑⭑⭑⭑"
-		ratingtitle2 = "⭑⭑⭑⭑⭐︎"
-		ratingtitle3 = "⭑⭑⭑⭐︎⭐︎"
-		ratingtitle4 = hs.styledtext.new("⭑⭑⭐︎⭐︎⭐︎", {color = {hex = "#0000FF", alpha = 1}})
-		ratingtitle5 = "⭑⭐︎⭐︎⭐︎⭐︎"
-		star5 = false
-		star4 = false
-		star3 = false
+		ratingtitle2 = hs.styledtext.new("⭑⭑⭐︎⭐︎⭐︎", {color = {hex = "#0000FF", alpha = 1}})
 		star2 = true
-		star1 = false
 	elseif rating == 20 then
-		ratingtitle1 = "⭑⭑⭑⭑⭑"
-		ratingtitle2 = "⭑⭑⭑⭑⭐︎"
-		ratingtitle3 = "⭑⭑⭑⭐︎⭐︎"
-		ratingtitle4 = "⭑⭑⭐︎⭐︎⭐︎"
-		ratingtitle5 = hs.styledtext.new("⭑⭐︎⭐︎⭐︎⭐︎", {color = {hex = "#0000FF", alpha = 1}})
-		star5 = false
-		star4 = false
-		star3 = false
-		star2 = false
+		ratingtitle1 = hs.styledtext.new("⭑⭐︎⭐︎⭐︎⭐︎", {color = {hex = "#0000FF", alpha = 1}})
 		star1 = true
-	elseif rating == 0 then
-		ratingtitle1 = "⭑⭑⭑⭑⭑"
-		ratingtitle2 = "⭑⭑⭑⭑⭐︎"
-		ratingtitle3 = "⭑⭑⭑⭐︎⭐︎"
-		ratingtitle4 = "⭑⭑⭐︎⭐︎⭐︎"
-		ratingtitle5 = "⭑⭐︎⭐︎⭐︎⭐︎"
-		star5 = false
-		star4 = false
-		star3 = false
-		star2 = false
-		star1 = false
 	end
 	saveartwork()
 	-- 判断是否为Apple Music
@@ -193,7 +151,6 @@ function setmenu()
 	else
 		local artworkurl = saveartworkam()
 		if artworkurl ~= nil then
-			--local artwork = hs.image.imageFromURL(artworkurl)
 			local artwork = hs.image.imageFromPath(hs.configdir .. "/currentartwork.jpg")
 			imagemenu = {title = "", image = artwork, fn = locate}
 		else
@@ -232,11 +189,11 @@ function setmenu()
 			{title = "-"},
 			lovedmenu,
 			dislikedmenu,
-			{title = ratingtitle1, checked = star5, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 100]]) end},
-			{title = ratingtitle2, checked = star4, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 80]]) end},
+			{title = ratingtitle5, checked = star5, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 100]]) end},
+			{title = ratingtitle4, checked = star4, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 80]]) end},
 			{title = ratingtitle3, checked = star3, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 60]]) end},
-			{title = ratingtitle4, checked = star2, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 40]]) end},
-			{title = ratingtitle5, checked = star1, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 20]]) end},
+			{title = ratingtitle2, checked = star2, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 40]]) end},
+			{title = ratingtitle1, checked = star1, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 20]]) end},
 			})
 end
 -- 延迟函数
