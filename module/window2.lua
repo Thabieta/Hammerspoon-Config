@@ -41,7 +41,7 @@ Resize.halfleft = function ()
 	windowStash2(cwin)
 	cwin:setFrame({x=cres.x, y=cres.y, w=cres.w/2, h=cres.h})
 end
-function Resize(option)
+function Resize2(option)
 	local cwin = hs.window.focusedWindow()
 	if cwin then
 		local cscreen = cwin:screen()
