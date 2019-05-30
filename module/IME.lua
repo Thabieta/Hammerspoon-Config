@@ -1,3 +1,4 @@
+hyper = {"ctrl", "alt"}
 -- 切换为拼音
 local function Pinyin()
 	--hs.keycodes.currentSourceID("com.apple.inputmethod.SCIM.ITABC")
