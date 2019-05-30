@@ -22,8 +22,12 @@ local module_list = {
 	"module.Spotlightlike",
 	"module.iTunes",
 	"module.window",
-	"module.autoupdate",
 		}
 for _, v in pairs(module_list) do
 	require (v)
+end
+-- Baby
+local owner = hs.host.localizedName()
+if owner ～= "鳳凰院カミのMacBook Pro" then
+	require "module.autoupdate"
 end
