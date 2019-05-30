@@ -90,7 +90,7 @@ hotkey = require "hs.hotkey"
 hyper = {"ctrl", "alt"}
 function windowManagement(keyFuncTable)
 	for key,fn in pairs(keyFuncTable) do
-		hotkey.bind(hyper, key, function() Resize(fn) end)
+		hotkey.bind(hyper, "'" .. key .. "'", function() Resize("'" .. fn .. "'") end)
 	end
 end
 windowManagement({
