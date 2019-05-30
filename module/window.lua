@@ -88,13 +88,13 @@ function Undo()
 end
 hotkey = require "hs.hotkey"
 hyper = {"ctrl", "alt"}
-local windowmanagementTable = ({
+windowmanagementTable = {
 		right = halfright,
 		left = halfleft,
 		up = halfup,
 		down = halfdown,
 		c = center,
-		'return' = fullscreen,
+		
 		delete = reset,
 		})
 for key,fn in pairs(windowmanagementTable) do
