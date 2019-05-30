@@ -94,7 +94,7 @@ windowmanagementTable({
 		up = halfup,
 		down = halfdown,
 		c = center,
-		return = fullscreen,
+		'return' = fullscreen,
 		delete = reset,
 		})
 for key,fn in pairs(windowmanagementTable) do
