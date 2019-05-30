@@ -88,7 +88,7 @@ function Undo()
 end
 hotkey = require "hs.hotkey"
 hyper = {"ctrl", "alt"}
-local windowmanagementTable = {
+local windowmanagementTable = ({
 		right = halfright,
 		left = halfleft,
 		up = halfup,
@@ -96,7 +96,7 @@ local windowmanagementTable = {
 		c = center,
 		'return' = fullscreen,
 		delete = reset,
-		}
+		})
 for key,fn in pairs(windowmanagementTable) do
 	hotkey.bind(hyper, key, function() Resize(fn) end)
 end
