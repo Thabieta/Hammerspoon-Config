@@ -71,6 +71,7 @@ windowsManagement({
 		right = Resize.halfright,
 		up = Resize.halfup,
 		down = Resize.halfdown,
+		c = Resize.center,
 		delete = Resize.reset,
 	})
 --[[
