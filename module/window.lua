@@ -94,13 +94,13 @@ function windowManagement(keyFuncTable)
 	end
 end
 windowManagement({
-	right = halfright,
-	left = halfleft,
-	up = halfup,
-	down = halfdown,
+	--right = halfright,
+	--left = halfleft,
+	--up = halfup,
+	--down = halfdown,
 	c = center,
 	--[return] = fullscreen,
-	delete = reset,
+	--delete = reset,
 		})
 --[[
 hs.hotkey.bind(hyper, 'right', function() Resize("halfright") end)
