@@ -21,7 +21,7 @@ local module_list = {
 	"module.IME",
 	"module.Spotlightlike",
 	"module.iTunes",
-	"module.window2",
+	"module.window",
 		}
 for _, v in pairs(module_list) do
 	require (v)
