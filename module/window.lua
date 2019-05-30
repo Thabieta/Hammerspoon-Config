@@ -88,6 +88,7 @@ function Undo()
 end
 hotkey = require "hs.hotkey"
 hyper = {"ctrl", "alt"}
+--[[
 function windowManagement(keyFuncTable)
 	for key,fn in pairs(keyFuncTable) do
 		hotkey.bind(hyper, "'" .. key .. "'", function() Resize("'" .. fn .. "'") end)
@@ -102,12 +103,11 @@ windowManagement({
 	--[return] = fullscreen,
 	--delete = reset,
 		})
---[[
-hs.hotkey.bind(hyper, 'right', function() Resize("halfright") end)
-hs.hotkey.bind(hyper, 'left', function() Resize("halfleft") end) 
-hs.hotkey.bind(hyper, 'up', function() Resize("halfup") end)
-hs.hotkey.bind(hyper, 'down', function() Resize("halfdown") end)
-hs.hotkey.bind(hyper, 'c', function() Resize("center") end)
-hs.hotkey.bind(hyper, 'return', function() Resize("fullscreen") end)
-hs.hotkey.bind(hyper, 'delete', function() Reset() end)
 --]]
+hotkey.bind(hyper, 'right', function() Resize("halfright") end)
+hotkey.bind(hyper, 'left', function() Resize("halfleft") end) 
+hotkey.bind(hyper, 'up', function() Resize("halfup") end)
+hotkey.bind(hyper, 'down', function() Resize("halfdown") end)
+hotkey.bind(hyper, 'c', function() Resize("center") end)
+hotkey.bind(hyper, 'return', function() Resize("fullscreen") end)
+hotkey.bind(hyper, 'delete', function() Reset() end)
