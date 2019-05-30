@@ -99,7 +99,7 @@ hotkey = require "hs.hotkey"
 hyper = {"ctrl", "alt"}
 local function windowBind(keyFuncTable)
   for key,fn in pairs(keyFuncTable) do
-    hk.bind(hyper, key, fn)
+    hotkey.bind(hyper, key, fn)
   end
 end
 
