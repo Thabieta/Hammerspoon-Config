@@ -36,7 +36,7 @@ local cwin = hs.window.focusedWindow()
 local cscreen = cwin:screen()
 local cres = cscreen:fullFrame()
 local wf = cwin:frame()
-Resize.halfleft = function ()
+module.halfleft = function ()
 	windowStash2(cwin)
 	cwin:setFrame({x=cres.x, y=cres.y, w=cres.w/2, h=cres.h})
 end
