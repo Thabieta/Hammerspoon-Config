@@ -32,6 +32,14 @@ local function windowStash2(window)
 	end
 end
 -- 窗口动作
+local cwin = hs.window.focusedWindow()
+local cscreen = cwin:screen()
+local cres = cscreen:fullFrame()
+local wf = cwin:frame()
+Resize.halfleft = function ()
+	windowStash2(cwin)
+	cwin:setFrame({x=cres.x, y=cres.y, w=cres.w/2, h=cres.h})
+end
 function Resize(option)
 	local cwin = hs.window.focusedWindow()
 	if cwin then
@@ -88,6 +96,16 @@ function Undo()
 end
 hotkey = require "hs.hotkey"
 hyper = {"ctrl", "alt"}
+local function windowBind(keyFuncTable)
+  for key,fn in pairs(keyFuncTable) do
+    hk.bind(hyper, key, fn)
+  end
+end
+
+-- * Move window to screen
+windowBind({
+  left = Resize.halfleft,
+})
 --[[
 function windowManagement(keyFuncTable)
 	for key,fn in pairs(keyFuncTable) do
