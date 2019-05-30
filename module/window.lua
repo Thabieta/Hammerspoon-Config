@@ -56,6 +56,14 @@ function Resize(option)
 		elseif option == "center" then
 			windowStash2(cwin)
 			cwin:centerOnScreen()
+		elseif option == "reset" then
+			local cwin = hs.window.focusedWindow()
+			local cwinid = cwin:id()
+			for idx,val in ipairs(winhistory2) do
+				if val[1] == cwinid then
+					cwin:setFrame(val[2])
+				end
+			end
 		elseif option == "expand" then
 			cwin:setFrame({x=wf.x-stepw, y=wf.y-steph, w=wf.w+(stepw*2), h=wf.h+(steph*2)})
 		elseif option == "shrink" then
@@ -78,16 +86,21 @@ function Undo()
 		end
 	end
 end
--- 重置回初始状态
-function Reset()
-	local cwin = hs.window.focusedWindow()
-	local cwinid = cwin:id()
-	for idx,val in ipairs(winhistory2) do
-		if val[1] == cwinid then
-			cwin:setFrame(val[2])
-		end
-	end
+hotkey = require "hs.hotkey"
+hyper = {"ctrl", "alt"}
+windowmanagementTable({
+		right = halfright,
+		left = halfleft,
+		up = halfup,
+		down = halfdown,
+		c = center,
+		return = fullscreen,
+		delete = reset,
+		})
+for key,fn in pairs(windowmanagementTable) do
+	hotkey.bind(hyper, key, function() Resize(fn) end)
 end
+--[[
 hs.hotkey.bind(hyper, 'right', function() Resize("halfright") end)
 hs.hotkey.bind(hyper, 'left', function() Resize("halfleft") end) 
 hs.hotkey.bind(hyper, 'up', function() Resize("halfup") end)
@@ -95,3 +108,4 @@ hs.hotkey.bind(hyper, 'down', function() Resize("halfdown") end)
 hs.hotkey.bind(hyper, 'c', function() Resize("center") end)
 hs.hotkey.bind(hyper, 'return', function() Resize("fullscreen") end)
 hs.hotkey.bind(hyper, 'delete', function() Reset() end)
+--]]
