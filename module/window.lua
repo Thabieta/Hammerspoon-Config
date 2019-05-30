@@ -82,7 +82,7 @@ windowsManagement({
 		right = Resize.halfright,
 		up = Resize.halfup,
 		down = Resize.halfdown,
-		return = Resize.fullscreen,
+		'return' = Resize.fullscreen,
 		delete = Resize.reset,
 	})
 --[[
