@@ -28,6 +28,6 @@ for _, v in pairs(module_list) do
 end
 -- Baby
 local owner = hs.host.localizedName()
-if owner ～= "鳳凰院カミのMacBook Pro" then
+if owner ~= "鳳凰院カミのMacBook Pro" then
 	require "module.autoupdate"
 end
