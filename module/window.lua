@@ -73,7 +73,6 @@ Resize.reset = function ()
 end
 hotkey = require "hs.hotkey"
 hyper = {"ctrl", "alt"}
-local enter = "return"
 function windowsManagement(keyFuncTable)
 	for key,fn in pairs(keyFuncTable) do
 		hotkey.bind(hyper, key, fn)
@@ -84,7 +83,7 @@ windowsManagement({
 		right = Resize.halfright,
 		up = Resize.halfup,
 		down = Resize.halfdown,
-		enter = Resize.fullscreen,
+		hs.keycodes.map[36] = Resize.fullscreen,
 		delete = Resize.reset,
 	})
 --[[
