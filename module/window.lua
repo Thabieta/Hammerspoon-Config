@@ -98,7 +98,7 @@ c = center,
 delete = reset,
 		}
 for key,fn in pairs(windowmanagementTable) do
-	hotkey.bind(hyper, key, function() Resize(fn) end)
+	hotkey.bind(hyper, "'" .. key .. "'", function() Resize("'" .. fn .. "'") end)
 end
 --[[
 hs.hotkey.bind(hyper, 'right', function() Resize("halfright") end)
