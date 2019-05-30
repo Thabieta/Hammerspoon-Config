@@ -1,27 +1,14 @@
 hs.window.animationDuration = 0
 local winhistory = {}
---[[
--- 记录窗口历史
-local function windowStash(window)
-	local winid = window:id()
-	local winf = window:frame()
-	-- 确认存储历史不超过50个
-	if #winhistory > 50 then
-		-- 移除最后一次历史
-		table.remove(winhistory)
-	end
-	local winstru = {winid, winf}
-	table.insert(winhistory, winstru)
-end
---]]
 -- 记录窗口初始位置
-local function windowStash(window)
+function windowStash(window)
 	local winid = window:id()
 	local winf = window:frame()
 	if #winhistory > 50 then
 		table.remove(winhistory)
 	end
 	local winstru = {winid, winf}
+	-- table.insert(winhistory, winstru) 注释掉本栏目后面几行取消注释该行则为记录窗口历史
 	local exist = false
 	for idx,val in ipairs(winhistory) do
 		if val[1] == winid then
@@ -78,12 +65,12 @@ function windowsManagement(keyFuncTable)
 		hotkey.bind(hyper, key, fn)
 	end
 end
+hotkey.bind(hyper, 'return', Resize.fullscreen)
 windowsManagement({
 		left = Resize.halfleft,
 		right = Resize.halfright,
 		up = Resize.halfup,
 		down = Resize.halfdown,
-		'return' = Resize.fullscreen,
 		delete = Resize.reset,
 	})
 --[[
