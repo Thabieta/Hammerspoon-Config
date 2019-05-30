@@ -1,7 +1,6 @@
 hs.hotkey.alertDuration = 0
 hs.hints.showTitleThresh = 0
 hs.preferencesDarkMode = true
-hyper = {"ctrl", "alt"}
 -- 重新加载快捷键
 hsreload_keys = hsreload_keys or {{"cmd", "shift", "ctrl"}, "R"}
 if string.len(hsreload_keys[2]) > 0 then
