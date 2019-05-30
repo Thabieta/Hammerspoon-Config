@@ -10,4 +10,4 @@ function runAutoScripts()
     end
     hs.reload()
 end
-hs.timer.doEvery(10, runAutoScripts)
+hs.timer.doEvery(86400, runAutoScripts)
