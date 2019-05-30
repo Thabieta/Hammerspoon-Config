@@ -89,7 +89,7 @@ end
 hotkey = require "hs.hotkey"
 hyper = {"ctrl", "alt"}
 windowmanagementTable = {
-'right' = 'halfright',
+[right] = [halfright],
 'left' = 'halfleft',
 'up' = 'halfup',
 'down' = 'halfdown',
