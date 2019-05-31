@@ -226,7 +226,7 @@ function setitunesbar()
 		if hs.itunes.getCurrentTrack() ~= nil then
 			updatemenubar()
 		else -- 若iTunes停止播放
-			deletemenubar()
+			iTunesBar:setTitle('■停止中')
 		end
 	else -- 若iTunes没有运行
 		deletemenubar()
