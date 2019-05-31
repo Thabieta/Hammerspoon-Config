@@ -20,37 +20,42 @@ function windowStash(window)
 	end
 end
 -- 窗口动作
-local cwin = hs.window.focusedWindow()
 local cscreen = cwin:screen()
 local cres = cscreen:fullFrame()
 local wf = cwin:frame()
 local Resize = {}
 Resize.halfleft = function ()
+	cwin = hs.window.focusedWindow()
 	windowStash(cwin)
 	cwin:setFrame({x=cres.x, y=cres.y, w=cres.w/2, h=cres.h})
 end
 Resize.halfright = function ()
+	cwin = hs.window.focusedWindow()
 	windowStash(cwin)
 	cwin:setFrame({x=cres.x+cres.w/2, y=cres.y, w=cres.w/2, h=cres.h})
 end
 Resize.halfup = function ()
+	cwin = hs.window.focusedWindow()
 	windowStash(cwin)
 	cwin:setFrame({x=cres.x, y=cres.y, w=cres.w, h=cres.h/2})
 end
 Resize.halfdown = function ()
+	cwin = hs.window.focusedWindow()
 	windowStash(cwin)
 	cwin:setFrame({x=cres.x, y=cres.y+cres.h/2, w=cres.w, h=cres.h/2})
 end
 Resize.fullscreen = function ()
+	cwin = hs.window.focusedWindow()
 	windowStash(cwin)
 	cwin:setFrame({x=cres.x, y=cres.y, w=cres.w, h=cres.h})
 end
 Resize.center = function ()
+	cwin = hs.window.focusedWindow()
 	windowStash(cwin)
 	cwin:centerOnScreen()
 end
 Resize.reset = function ()
-	local cwin = hs.window.focusedWindow()
+	cwin = hs.window.focusedWindow()
 	local cwinid = cwin:id()
 	for idx,val in ipairs(winhistory) do
 		if val[1] == cwinid then
@@ -58,7 +63,6 @@ Resize.reset = function ()
 		end
 	end
 end
-if cwin then
 hotkey = require "hs.hotkey"
 hyper = {"ctrl", "alt"}
 function windowsManagement(keyFuncTable)
@@ -75,7 +79,6 @@ windowsManagement({
 		c = Resize.center,
 		delete = Resize.reset,
 	})
-end
 --[[
 function Resize(option)
 	local cwin = hs.window.focusedWindow()
