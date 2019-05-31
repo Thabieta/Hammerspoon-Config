@@ -15,6 +15,8 @@ return timeatime
 end
 abar:setTitle(os.time())
 abar:setMenu({
+{title = "1"},
+{title = os.time()},
 {title = atime},
 })
 --hs.hotkey.bind({"alt","ctrl","cmd"}, 'd', abar:delete())
