@@ -196,6 +196,20 @@ function setmenu()
 			{title = ratingtitle1, checked = star1, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 20]]) end},
 			})
 end
+-- 创建菜单（停止时）
+function setmenu2()
+	-- 获取播放列表
+	local _,library,_ = hs.osascript.applescript([[tell application "iTunes" to get name of playlists]])
+	local playlist = {}
+--for i=7, #(library) do
+		
+--end
+end
+-- 随机播放列表中曲目
+function shuffleplay(playlistname)
+	local playscript = [[tell application "iTunes" to play playlist named pname]]
+	hs.osascript.applescript(playscript:gsub("pname", "playlistname"))
+end
 -- 延迟函数
 function delay(gap, func)
 	local delaytimer = hs.timer.delayed.new(gap, func)
@@ -216,19 +230,6 @@ function updatemenubar()
 		delay(1, setmenu)
 	end
 end
--- 获取播放列表
-function getplaylist()
-	local _,library,_ = hs.osascript.applescript([[tell application "iTunes" to get name of playlists]])
-	local playlist = {}
-	for i=7, #(library) do
-	    table.insert(playlist, library[i])  
-	end 
-	return playlist
-end
--- 随机播放列表中曲目
-function shuffleplay(playlistname)
-	hs.osascript.applescript([[tell application "iTunes" to play playlist named playlistname]])
-end
 -- 创建Menubar
 function setitunesbar()
 	if hs.itunes.isRunning() then -- 若iTunes正在运行
@@ -240,7 +241,6 @@ function setitunesbar()
 			updatemenubar()
 		else -- 若iTunes停止播放
 			iTunesBar:setTitle('■停止中')
-			getplaylist()
 			iTunesBar:setMenu({
 			})
 		end
