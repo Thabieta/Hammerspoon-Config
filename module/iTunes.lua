@@ -247,7 +247,6 @@ function updatemenubar()
 		songdisliked = iTunes.disliked()
 		songrating = iTunes.rating()
 		settitle()
-print(iTunes.title())
 	end
 end
 -- 创建Menubar
@@ -258,7 +257,11 @@ function setitunesbar()
 			iTunesBar = hs.menubar.new()
 			iTunesBar:setTitle('🎵iTunes')
 		end
-		updatemenubar()
+		if iTunes.title() ~= nil then
+			updatemenubar()
+		else -- 若iTunes停止播放
+			setmenu2()
+		end
 	else -- 若iTunes没有运行
 		deletemenubar()
 	end
