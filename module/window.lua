@@ -61,7 +61,8 @@ function windowsManagement(keyFuncTable)
 				local cwin = hs.window.focusedWindow()
 				local cscreen = cwin:screen()
 				local cres = cscreen:fullFrame()
-				fn end)		
+				fn
+			end)		
 	end
 end
 hotkey.bind(hyper, 'return', Resize.fullscreen)
