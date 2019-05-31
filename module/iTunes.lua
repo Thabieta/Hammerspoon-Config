@@ -41,9 +41,12 @@ iTunes.locate = function ()
 		end tell
 				]])
 end
--- 保存本地曲目的专辑封面
+-- 保存专辑封面
 iTunes.saveartwork = function ()
-	local script = [[
+	-- 判断是否为Apple Music
+	local _,kind,_ = hs.osascript.applescript([[tell application "iTunes" to get current track's kind]])
+	if string.len(kind) > 0 then --若为本地曲目
+		local script = [[
 			try
 				tell application "iTunes"
 					set theartwork to raw data of current track's artwork 1
@@ -61,23 +64,29 @@ iTunes.saveartwork = function ()
 				close access outFile
 			end try
 					]]
-	if owner == "鳳凰院カミのMacBook Pro" then
-		saveartworkscript = script:gsub("userName","hououinkami")
-	else
-		saveartworkscript = script:gsub("userName","cynthia")
-	end
-	if hs.itunes.getCurrentAlbum() ~= songalbum then
-		songalbum = hs.itunes.getCurrentAlbum()
-		hs.osascript.applescript(saveartworkscript)
-	end
-end
--- 获取Apple Music曲目的专辑封面
-iTunes.saveartworkam = function ()
-	local album = hs.itunes.getCurrentAlbum()
-	local artist = hs.itunes.getCurrentArtist()
+		if owner == "鳳凰院カミのMacBook Pro" then
+			saveartworkscript = script:gsub("userName","hououinkami")
+		else
+			saveartworkscript = script:gsub("userName","cynthia")
+		end
+		if hs.itunes.getCurrentAlbum() ~= songalbum then
+			songalbum = hs.itunes.getCurrentAlbum()
+			hs.osascript.applescript(saveartworkscript)
+		end
+		-- 获取图片后缀名
+		local _,format,_ = hs.osascript.applescript([[tell application "iTunes" to get format of current track's artwork 1 as string]])
+		if string.find(format, "PNG") then
+			ext = "png"
+		else
+			ext = "jpg"
+		end
+		artwork = hs.image.imageFromPath(hs.configdir .. "/currentartwork." .. ext):setSize({h = 300, w = 300}, absolute == true)
+	else -- 若为Apple Music
+		local album = hs.itunes.getCurrentAlbum()
+		local artist = hs.itunes.getCurrentArtist()
 		local amurl = "https://itunes.apple.com/search?term=" .. hs.http.encodeForQuery(album .. " " .. artist) .. "&country=jp&entity=album&limit=1&output=json"
-	--[[
-	hs.http.asyncGet(amurl, nil, function(status, body, headers)
+		--[[
+		hs.http.asyncGet(amurl, nil, function(status, body, headers)
 			if status == 200 then
 				local songdata = hs.json.decode(body)
 				artworkurl100 = songdata.results[1].artworkUrl100
@@ -86,7 +95,7 @@ iTunes.saveartworkam = function ()
 			local artworkfile = hs.image.imageFromURL(artworkurl):setSize({h = 300, w = 300}, absolute == true)
 			artworkfile:saveToFile(hs.configdir .. "/currentartwork.jpg")
 		end)
-	--]]
+		--]]
 		local status,body,headers = hs.http.get(amurl, nil)
 		if status == 200 then
 			local songdata = hs.json.decode(body)
@@ -97,7 +106,13 @@ iTunes.saveartworkam = function ()
 				artworkfile:saveToFile(hs.configdir .. "/currentartwork.jpg")
 			end
 		end
-	return artworkurl
+		if artworkurl ~= nil then
+			local artwork = hs.image.imageFromPath(hs.configdir .. "/currentartwork.jpg")
+		else
+			local artwork = nil
+		end
+	end
+	return artwork
 end
 -- 随机播放列表中曲目
 iTunes.shuffleplay = function (playlistname)
@@ -160,25 +175,10 @@ function setmenu()
 		ratingtitle1 = hs.styledtext.new("⭑⭐︎⭐︎⭐︎⭐︎", {color = {hex = "#0000FF", alpha = 1}})
 		star1 = true
 	end
-	-- 判断是否为Apple Music
-	local _,kind,_ = hs.osascript.applescript([[tell application "iTunes" to get current track's kind]])
-	if string.len(kind) > 0 then
-		-- 获取图片后缀名
-		local _,format,_ = hs.osascript.applescript([[tell application "iTunes" to get format of current track's artwork 1 as string]])
-		if string.find(format, "PNG") then
-			ext = "png"
-		else
-			ext = "jpg"
-		end
-		local artwork = hs.image.imageFromPath(hs.configdir .. "/currentartwork." .. ext):setSize({h = 300, w = 300}, absolute == true)
+	if artwork ~= nil then
 		imagemenu = {title = "", image = artwork, fn = locate}
 	else
-		if artworkurl ~= nil then
-			local artwork = hs.image.imageFromPath(hs.configdir .. "/currentartwork.jpg")
-			imagemenu = {title = "", image = artwork, fn = locate}
-		else
-			imgaemenu = {}
-		end
+		imgaemenu = {}
 	end
 	if owner == "鳳凰院カミのMacBook Pro" then
 		lovedmenu = {title = lovedtitle, fn = function() hs.osascript.applescript([[
@@ -246,8 +246,7 @@ function updatemenubar()
 		songdisliked = iTunes.disliked()
 		songrating = iTunes.rating()
 		settitle()
-		iTunes.saveartwork()
-		iTunes.saveartworkam()
+		delay(1, iTunes.saveartwork)
 	end
 end
 -- 创建Menubar
