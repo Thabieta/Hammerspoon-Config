@@ -10,13 +10,12 @@ end
 
 local abar = hs.menubar.new()
 function atime()
-timeatime = os.time()
+local timeatime = {
+{title = "1"},
+{title = os.time()},
+}
 return timeatime
 end
 abar:setTitle(os.time())
-abar:setMenu({
-{title = "1"},
-{title = os.time()},
-{title = atime},
-})
+abar:setMenu(atime)
 --hs.hotkey.bind({"alt","ctrl","cmd"}, 'd', abar:delete())
