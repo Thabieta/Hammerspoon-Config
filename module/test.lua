@@ -6,4 +6,4 @@ for i=7, #(library) do
 		--playlist.fn = "1"
 table.insert(menulist, {title = library[i], fn = "1"})
 	end
-print(playlist[1].title)
+print(menulist[1].title)
