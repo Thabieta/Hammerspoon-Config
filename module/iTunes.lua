@@ -109,22 +109,22 @@ function deletemenubar()
 end
 -- 创建标题
 function settitle()
-	local itunesinfo = '🎵' .. iTunes.title .. ' - ' .. iTunes.artist
+	local itunesinfo = '🎵' .. iTunes.title() .. ' - ' .. iTunes.artist()
 	local infolength = string.len(itunesinfo)
 	if infolength < 90 then
 		iTunesBar:setTitle(itunesinfo)
 	else
-		iTunesBar:setTitle('🎵' .. iTunes.title)
+		iTunesBar:setTitle('🎵' .. iTunes.title())
 	end
 end
 -- 创建菜单
 function setmenu()
-	if iTunes.loved == true then
+	if iTunes.loved() == true then
 		lovedtitle = "❤️ラブ済み"
 	else
 		lovedtitle = "🖤ラブ"
 	end
-	if iTunes.disliked == true then
+	if iTunes.disliked() == true then
 		dislikedtitle = "💔好きじゃない済み"
 	else
 		dislikedtitle = "🖤好きじゃない"
