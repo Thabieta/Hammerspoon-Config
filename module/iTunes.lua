@@ -204,7 +204,7 @@ function setmenu2()
 	for i=7, #(library) do
 		table.insert(playlist, {title = library[i], fn = shuffleplay(library[i])})
 	end
-	if iTunesBar:title() ~= ■停止中 then
+	if iTunesBar:title() ~= '■停止中' then
 		iTunesBar:setTitle('■停止中')
 		iTunesBar:setMenu(playlist)
 	end
