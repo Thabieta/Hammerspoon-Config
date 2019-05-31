@@ -7,6 +7,31 @@ local songalbum = nil
 local owner = hs.host.localizedName()
 -- iTunes功能函数集 --
 local iTunes = {}
+-- 曲目信息
+iTunes.title = function () 
+	return hs.itunes.getCurrentTrack()
+end
+iTunes.artist = function () 
+	local artist = hs.itunes.getCurrentArtist()
+	return artist
+end
+iTunes.album = function () 
+	local album = hs.itunes.getCurrentAlbum()
+	return album
+end
+iTunes.loved = function () 
+	local _,loved,_ = hs.osascript.applescript([[tell application "iTunes" to get current track's loved]])
+	return loved
+end
+iTunes.disliked = function () 
+	local _,disliked,_ = hs.osascript.applescript([[tell application "iTunes" to get current track's disliked]])
+	return disliked
+end
+iTunes.rating = function () 
+	local _,rating100,_ = hs.osascript.applescript([[tell application "iTunes" to get current track's rating]])
+	rating = rating100/20
+	return rating
+end
 -- 跳转至当前播放的歌曲
 iTunes.locate = function ()
 	hs.osascript.applescript([[
@@ -50,7 +75,7 @@ end
 iTunes.saveartworkam = function ()
 	local album = hs.itunes.getCurrentAlbum()
 	local artist = hs.itunes.getCurrentArtist()
-	local amurl = "https://itunes.apple.com/search?term=" .. hs.http.encodeForQuery(album .. " " .. artist) .. "&country=jp&entity=album&limit=1&output=json"
+		local amurl = "https://itunes.apple.com/search?term=" .. hs.http.encodeForQuery(album .. " " .. artist) .. "&country=jp&entity=album&limit=1&output=json"
 	--[[
 	hs.http.asyncGet(amurl, nil, function(status, body, headers)
 			if status == 200 then
@@ -83,31 +108,22 @@ function deletemenubar()
 end
 -- 创建标题
 function settitle()
-	local title = hs.itunes.getCurrentTrack()
-	local artist = hs.itunes.getCurrentArtist()
-	local itunesinfo = '🎵' .. title .. ' - ' .. artist
+	local itunesinfo = '🎵' .. iTunes.title() .. ' - ' .. iTunes.artist()
 	local infolength = string.len(itunesinfo)
 	if infolength < 90 then
 		iTunesBar:setTitle(itunesinfo)
 	else
-		iTunesBar:setTitle('🎵' .. title)
+		iTunesBar:setTitle('🎵' .. iTunes.title())
 	end
 end
 -- 创建菜单
 function setmenu()
-	local title = hs.itunes.getCurrentTrack()
-	local artist = hs.itunes.getCurrentArtist()
-	local album = hs.itunes.getCurrentAlbum()
-	local _,loved,_ = hs.osascript.applescript([[tell application "iTunes" to get current track's loved]])
-	local _,disliked,_ = hs.osascript.applescript([[tell application "iTunes" to get current track's disliked]])
-	local _,rating100,_ = hs.osascript.applescript([[tell application "iTunes" to get current track's rating]])
-	local rating = rating100/20
-	if loved == true then
+	if iTunes.loved() == true then
 		lovedtitle = "❤️ラブ済み"
 	else
 		lovedtitle = "🖤ラブ"
 	end
-	if disliked == true then
+	if iTunes.disliked() == true then
 		dislikedtitle = "💔好きじゃない済み"
 	else
 		dislikedtitle = "🖤好きじゃない"
@@ -122,19 +138,19 @@ function setmenu()
 	local star3 = false
 	local star2 = false
 	local star1 = false
-	if rating == 5 then
+	if iTunes.rating() == 5 then
 		ratingtitle5 = hs.styledtext.new("⭑⭑⭑⭑⭑", {color = {hex = "#0000FF", alpha = 1}})
 		star5 = true
-	elseif rating == 4 then
+	elseif iTunes.rating() == 4 then
 		ratingtitle4 = hs.styledtext.new("⭑⭑⭑⭑⭐︎", {color = {hex = "#0000FF", alpha = 1}})
 		star4 = true
-	elseif rating == 3 then
+	elseif iTunes.rating() == 3 then
 		ratingtitle3 = hs.styledtext.new("⭑⭑⭑⭐︎⭐︎", {color = {hex = "#0000FF", alpha = 1}})
 		star3 = true
-	elseif rating == 2 then
+	elseif iTunes.rating() == 2 then
 		ratingtitle2 = hs.styledtext.new("⭑⭑⭐︎⭐︎⭐︎", {color = {hex = "#0000FF", alpha = 1}})
 		star2 = true
-	elseif rating == 1 then
+	elseif iTunes.rating() == 1 then
 		ratingtitle1 = hs.styledtext.new("⭑⭐︎⭐︎⭐︎⭐︎", {color = {hex = "#0000FF", alpha = 1}})
 		star1 = true
 	end
@@ -186,9 +202,9 @@ function setmenu()
 	-- 显示菜单
 	local iTunesBarMenu = {
 			imagemenu,
-			{title = "🎸" .. title(), fn = locate},
-			{title = "👩🏻‍🎤" .. artist(), fn = locate},
-			{title = "💿" .. album(), fn = locate},
+			{title = "🎸" .. iTunes.title(), fn = locate},
+			{title = "👩🏻‍🎤" .. iTunes.artist(), fn = locate},
+			{title = "💿" .. iTunes.album(), fn = locate},
 			{title = "-"},
 			lovedmenu,
 			dislikedmenu,
@@ -225,20 +241,13 @@ function delay(gap, func)
 end
 -- 更新Menubar
 function updatemenubar()
-	local title = hs.itunes.getCurrentTrack()
-	local artist = hs.itunes.getCurrentArtist()
-	local album = hs.itunes.getCurrentAlbum()
-	local _,loved,_ = hs.osascript.applescript([[tell application "iTunes" to get current track's loved]])
-	local _,disliked,_ = hs.osascript.applescript([[tell application "iTunes" to get current track's disliked]])
-	local _,rating100,_ = hs.osascript.applescript([[tell application "iTunes" to get current track's rating]])
-	local rating = rating100/20
-	if title ~= songtitle or loved ~= songloved or disliked ~= songdisliked or rating ~= songrating then --若更换了曲目
-		songtitle = title
-		songloved = loved
-		songdisliked = disliked
-		songrating = rating
+	if iTunes.title() ~= songtitle or iTunes.loved() ~= songloved or iTunes.disliked() ~= songdisliked or iTunes.rating() ~= songrating then --若更换了曲目
+		songtitle = iTunes.title()
+		songloved = iTunes.loved()
+		songdisliked = iTunes.disliked()
+		songrating = iTunes.rating()
 		settitle()
-print(title)
+print(iTunes.title())
 	end
 end
 -- 创建Menubar
