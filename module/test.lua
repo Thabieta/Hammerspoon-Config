@@ -7,15 +7,3 @@ function shuffleplay(playlistname)
 	local playscript = [[tell application "iTunes" to play playlist named pname]]
 	hs.osascript.applescript(playscript:gsub("pname", "playlistname"))
 end
-
-local abar = hs.menubar.new()
-function atime()
-local timeatime = {
-{title = "1"},
-{title = os.time()},
-}
-return timeatime
-end
-abar:setTitle(os.time())
-abar:setMenu(atime)
---hs.hotkey.bind({"alt","ctrl","cmd"}, 'd', abar:delete())
