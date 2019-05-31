@@ -59,4 +59,4 @@ function searchMain()
 	end
 	return search
 end
-hs.hotkey.bind({"alt"}, 'space', "Toggle show chooser", searchMain)
+hs.hotkey.bind({"alt"}, 'space', searchMain)
