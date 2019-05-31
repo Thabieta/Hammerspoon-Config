@@ -256,13 +256,13 @@ function setitunesbar()
 		-- 若首次播放则新建menubar item
 		if iTunesBar == nil then
 			iTunesBar = hs.menubar.new()
-			iTunesBar:setTitle('■停止中')
+			iTunesBar:setTitle('🎵iTunes')
 		end
 		updatemenubar()
 	else -- 若iTunes没有运行
 		deletemenubar()
 	end
-	hs.timer.doAfter(1, setitunesbar)
+	--hs.timer.doAfter(1, setitunesbar)
 end
-setitunesbar()
+hs.timer.doEvery(1, setitunesbar)
 iTunesBar:setMenu(setmenu)
