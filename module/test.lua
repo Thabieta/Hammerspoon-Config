@@ -16,4 +16,4 @@ end
 abar:setMenu({
 {title = atime},
 })
-hs.hotkey.bind({"alt","ctrl","cmd"}, 'd', abar:delete())
+--hs.hotkey.bind({"alt","ctrl","cmd"}, 'd', abar:delete())
