@@ -204,7 +204,10 @@ function setmenu2()
 	for i=7, #(library) do
 		table.insert(playlist, {title = library[i], fn = shuffleplay(library[i])})
 	end
-	return playlist
+	if iTunesBar:title() ~= ■停止中 then
+		iTunesBar:setTitle('■停止中')
+		iTunesBar:setMenu(playlist)
+	end
 end
 -- 随机播放列表中曲目
 function shuffleplay(playlistname)
@@ -241,8 +244,7 @@ function setitunesbar()
 		if hs.itunes.getCurrentTrack() ~= nil then
 			updatemenubar()
 		else -- 若iTunes停止播放
-			iTunesBar:setTitle('■停止中')
-			iTunesBar:setMenu(setmenu2)
+			setmenu2()
 		end
 	else -- 若iTunes没有运行
 		deletemenubar()
