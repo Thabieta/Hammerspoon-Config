@@ -202,8 +202,9 @@ function setmenu2()
 	local _,library,_ = hs.osascript.applescript([[tell application "iTunes" to get name of playlists]])
 	local playlist = {}
 	for i=7, #(library) do
-		table.insert(playlist, {title = library[i], fn = function() shuffleplay(library[i]) end})
+		table.insert(playlist, {title = library[i], fn = shuffleplay(library[i])})
 	end
+	return playlist
 end
 -- 随机播放列表中曲目
 function shuffleplay(playlistname)
