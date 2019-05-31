@@ -5,27 +5,36 @@ local songdisliked = nil
 local songrating = nil
 local songalbum = nil
 local owner = hs.host.localizedName()
--- 删除Menubar
-function deletemenubar()
-	if iTunesBar ~= nil then
-		iTunesBar:delete()
-	end
+-- iTunes功能函数集 --
+local iTunes = {}
+-- 曲目信息
+iTunes.title = function () 
+	local title = hs.itunes.getCurrentTrack()
+	return title
 end
--- 创建标题
-function settitle()
-	local track = hs.itunes.getCurrentTrack()
+iTunes.artist = function () 
 	local artist = hs.itunes.getCurrentArtist()
+	return artist
+end
+iTunes.album = function () 
 	local album = hs.itunes.getCurrentAlbum()
-	local itunesinfo = '🎵' .. track .. ' - ' .. artist
-	local infolength = string.len(itunesinfo)
-	if infolength < 90 then
-		iTunesBar:setTitle(itunesinfo)
-	else
-		iTunesBar:setTitle('🎵' .. track)
-	end
+	return album
+end
+iTunes.loved = function () 
+	local _,loved,_ = hs.osascript.applescript([[tell application "iTunes" to get current track's loved]])
+	return loved
+end
+iTunes.disliked = function () 
+	local _,disliked,_ = hs.osascript.applescript([[tell application "iTunes" to get current track's disliked]])
+	return disliked
+end
+iTunes.rating = function () 
+	local _,rating100,_ = hs.osascript.applescript([[tell application "iTunes" to get current track's rating]])
+	rating = rating100/20
+	return rating
 end
 -- 跳转至当前播放的歌曲
-function locate()
+iTunes.locate = function ()
 	hs.osascript.applescript([[
 		tell application "iTunes"
 			activate
@@ -34,7 +43,8 @@ function locate()
 				]])
 end
 -- 保存本地曲目的专辑封面
-local script = [[
+iTunes.saveartwork = function ()
+	local script = [[
 			try
 				tell application "iTunes"
 					set theartwork to raw data of current track's artwork 1
@@ -52,19 +62,18 @@ local script = [[
 				close access outFile
 			end try
 					]]
-if owner == "鳳凰院カミのMacBook Pro" then
-	saveartworkscript = script:gsub("userName","hououinkami")
-else
-	saveartworkscript = script:gsub("userName","cynthia")
-end
-function saveartwork()
+	if owner == "鳳凰院カミのMacBook Pro" then
+		saveartworkscript = script:gsub("userName","hououinkami")
+	else
+		saveartworkscript = script:gsub("userName","cynthia")
+	end
 	if hs.itunes.getCurrentAlbum() ~= songalbum then
 		songalbum = hs.itunes.getCurrentAlbum()
 		hs.osascript.applescript(saveartworkscript)
 	end
 end
 -- 获取Apple Music曲目的专辑封面
-function saveartworkam()
+iTunes.saveartworkam = function ()
 	local album = hs.itunes.getCurrentAlbum()
 	local artist = hs.itunes.getCurrentArtist()
 		local amurl = "https://itunes.apple.com/search?term=" .. hs.http.encodeForQuery(album .. " " .. artist) .. "&country=jp&entity=album&limit=1&output=json"
@@ -91,20 +100,31 @@ function saveartworkam()
 		end
 	return artworkurl
 end
+-- menubar函数集 --
+-- 删除Menubar
+function deletemenubar()
+	if iTunesBar ~= nil then
+		iTunesBar:delete()
+	end
+end
+-- 创建标题
+function settitle()
+	local itunesinfo = '🎵' .. iTunes.title .. ' - ' .. iTunes.artist
+	local infolength = string.len(itunesinfo)
+	if infolength < 90 then
+		iTunesBar:setTitle(itunesinfo)
+	else
+		iTunesBar:setTitle('🎵' .. iTunes.title)
+	end
+end
 -- 创建菜单
 function setmenu()
-	local track = hs.itunes.getCurrentTrack()
-	local artist = hs.itunes.getCurrentArtist()
-	local album = hs.itunes.getCurrentAlbum()
-	local _,loved,_ = hs.osascript.applescript([[tell application "iTunes" to get current track's loved]])
-	local _,disliked,_ = hs.osascript.applescript([[tell application "iTunes" to get current track's disliked]])
-	local _,rating,_ = hs.osascript.applescript([[tell application "iTunes" to get current track's rating]])
-	if loved == true then
+	if iTunes.loved == true then
 		lovedtitle = "❤️ラブ済み"
 	else
 		lovedtitle = "🖤ラブ"
 	end
-	if disliked == true then
+	if iTunes.disliked == true then
 		dislikedtitle = "💔好きじゃない済み"
 	else
 		dislikedtitle = "🖤好きじゃない"
@@ -119,23 +139,23 @@ function setmenu()
 	local star3 = false
 	local star2 = false
 	local star1 = false
-	if rating == 100 then
+	if rating == 5 then
 		ratingtitle5 = hs.styledtext.new("⭑⭑⭑⭑⭑", {color = {hex = "#0000FF", alpha = 1}})
 		star5 = true
-	elseif rating == 80 then
+	elseif rating == 4 then
 		ratingtitle4 = hs.styledtext.new("⭑⭑⭑⭑⭐︎", {color = {hex = "#0000FF", alpha = 1}})
 		star4 = true
-	elseif rating == 60 then
+	elseif rating == 3 then
 		ratingtitle3 = hs.styledtext.new("⭑⭑⭑⭐︎⭐︎", {color = {hex = "#0000FF", alpha = 1}})
 		star3 = true
-	elseif rating == 40 then
+	elseif rating == 2 then
 		ratingtitle2 = hs.styledtext.new("⭑⭑⭐︎⭐︎⭐︎", {color = {hex = "#0000FF", alpha = 1}})
 		star2 = true
-	elseif rating == 20 then
+	elseif rating == 1 then
 		ratingtitle1 = hs.styledtext.new("⭑⭐︎⭐︎⭐︎⭐︎", {color = {hex = "#0000FF", alpha = 1}})
 		star1 = true
 	end
-	saveartwork()
+	iTunes.saveartwork
 	-- 判断是否为Apple Music
 	local _,kind,_ = hs.osascript.applescript([[tell application "iTunes" to get current track's kind]])
 	if string.len(kind) > 0 then
@@ -181,7 +201,7 @@ function setmenu()
 		dislikedmenu = {}
 	end
 	-- 显示菜单
-	iTunesBar:setMenu({
+	local iTunesBarMenu = {
 			imagemenu,
 			{title = "🎸" .. track, fn = locate},
 			{title = "👩🏻‍🎤" .. artist, fn = locate},
@@ -194,7 +214,8 @@ function setmenu()
 			{title = ratingtitle3, checked = star3, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 60]]) end},
 			{title = ratingtitle2, checked = star2, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 40]]) end},
 			{title = ratingtitle1, checked = star1, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 20]]) end},
-			})
+			}
+	return iTunesBarMenu
 end
 -- 创建菜单（停止时）
 function setmenu2()
@@ -221,17 +242,12 @@ function delay(gap, func)
 end
 -- 更新Menubar
 function updatemenubar()
-	local track = hs.itunes.getCurrentTrack()
-	local _,loved,_ = hs.osascript.applescript([[tell application "iTunes" to get current track's loved]])
-	local _,disliked,_ = hs.osascript.applescript([[tell application "iTunes" to get current track's disliked]])
-	local _,rating,_ = hs.osascript.applescript([[tell application "iTunes" to get current track's rating]])
-	if track ~= songtitle or loved ~= songloved or disliked ~= songdisliked or rating ~= songrating then --若更换了曲目
-		songtitle = track
-		songloved = loved
-		songdisliked = disliked
-		songrating = rating
+	if iTunes.title ~= songtitle or iTunes.loved ~= songloved or iTunes.disliked ~= songdisliked or iTunes.rating ~= songrating then --若更换了曲目
+		songtitle = iTunes.title
+		songloved = iTunes.loved
+		songdisliked = iTunes.disliked
+		songrating = iTunes.rating
 		settitle()
-		delay(1, setmenu)
 	end
 end
 -- 创建Menubar
@@ -251,4 +267,5 @@ function setitunesbar()
 	end
 	hs.timer.doAfter(1, setitunesbar)
 end
+iTunesBar:setMenu(setmenu)
 setitunesbar()
