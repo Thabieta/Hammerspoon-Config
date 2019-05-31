@@ -262,7 +262,7 @@ function setitunesbar()
 	else -- 若iTunes没有运行
 		deletemenubar()
 	end
-	hs.timer.doEvery(1, setitunesbar)
+	hs.timer.doAfter(1, setitunesbar)
 end
 setitunesbar()
 iTunesBar:setMenu(setmenu)
