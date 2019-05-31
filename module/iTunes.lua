@@ -258,12 +258,11 @@ function setitunesbar()
 			iTunesBar = hs.menubar.new()
 			iTunesBar:setTitle('■停止中')
 		end
+		updatemenubar()
 	else -- 若iTunes没有运行
 		deletemenubar()
 	end
+	hs.timer.doEvery(1, setitunesbar)
 end
 setitunesbar()
-if iTunesBar then
-	hs.timer.doEvery(1, updatemenubar)
-	iTunesBar:setMenu(setmenu)
-end
+iTunesBar:setMenu(setmenu)
