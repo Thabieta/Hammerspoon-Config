@@ -102,7 +102,8 @@ end
 -- 随机播放列表中曲目
 iTunes.shuffleplay = function (playlistname)
 	local playscript = [[tell application "iTunes" to play playlist named pname]]
-	hs.osascript.applescript(playscript:gsub("pname", "playlistname"))
+	local playlistscript = playscript:gsub("pname", "playlistname")
+	hs.osascript.applescript(playlistscript)
 end
 -- menubar函数集 --
 -- 删除Menubar
@@ -159,7 +160,6 @@ function setmenu()
 		ratingtitle1 = hs.styledtext.new("⭑⭐︎⭐︎⭐︎⭐︎", {color = {hex = "#0000FF", alpha = 1}})
 		star1 = true
 	end
-	iTunes.saveartwork()
 	-- 判断是否为Apple Music
 	local _,kind,_ = hs.osascript.applescript([[tell application "iTunes" to get current track's kind]])
 	if string.len(kind) > 0 then
@@ -170,6 +170,7 @@ function setmenu()
 		else
 			ext = "jpg"
 		end
+		iTunes.saveartwork()
 		local artwork = hs.image.imageFromPath(hs.configdir .. "/currentartwork." .. ext):setSize({h = 300, w = 300}, absolute == true)
 		imagemenu = {title = "", image = artwork, fn = locate}
 	else
