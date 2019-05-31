@@ -227,6 +227,8 @@ function setitunesbar()
 			updatemenubar()
 		else -- 若iTunes停止播放
 			iTunesBar:setTitle('■停止中')
+			iTunesBar:setMenu({
+			})
 		end
 	else -- 若iTunes没有运行
 		deletemenubar()
