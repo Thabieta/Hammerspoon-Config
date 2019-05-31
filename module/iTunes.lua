@@ -256,6 +256,7 @@ function setitunesbar()
 		-- 若首次播放则新建menubar item
 		if iTunesBar == nil then
 			iTunesBar = hs.menubar.new()
+			iTunesBar:setTitle('■停止中')
 		end
 		hs.timer.doEvery(1, updatemenubar)
 		iTunesBar:setMenu(setmenu)
