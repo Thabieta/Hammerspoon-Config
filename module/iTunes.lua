@@ -99,6 +99,11 @@ iTunes.saveartworkam = function ()
 		end
 	return artworkurl
 end
+-- 随机播放列表中曲目
+iTunes.shuffleplay = function (playlistname)
+	local playscript = [[tell application "iTunes" to play playlist named pname]]
+	hs.osascript.applescript(playscript:gsub("pname", "playlistname"))
+end
 -- menubar函数集 --
 -- 删除Menubar
 function deletemenubar()
@@ -217,7 +222,7 @@ function setmenu()
 	return iTunesBarMenu
 end
 -- 创建菜单（停止时）
-function setmenu2()
+function setmenustop()
 	-- 获取播放列表
 	local _,library,_ = hs.osascript.applescript([[tell application "iTunes" to get name of playlists]])
 	local playlist = {}
@@ -228,11 +233,6 @@ function setmenu2()
 		iTunesBar:setTitle('■停止中')
 		iTunesBar:setMenu(playlist)
 	end
-end
--- 随机播放列表中曲目
-function shuffleplay(playlistname)
-	local playscript = [[tell application "iTunes" to play playlist named pname]]
-	hs.osascript.applescript(playscript:gsub("pname", "playlistname"))
 end
 -- 延迟函数
 function delay(gap, func)
@@ -260,7 +260,7 @@ function setitunesbar()
 		if iTunes.title() ~= nil then
 			updatemenubar()
 		else -- 若iTunes停止播放
-			setmenu2()
+			setmenustop()
 		end
 	else -- 若iTunes没有运行
 		deletemenubar()
