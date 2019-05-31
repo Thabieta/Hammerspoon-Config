@@ -201,10 +201,8 @@ function setmenu2()
 	-- 获取播放列表
 	local _,library,_ = hs.osascript.applescript([[tell application "iTunes" to get name of playlists]])
 	local playlist = {}
-	local _,library,_ = hs.osascript.applescript([[tell application "iTunes" to get name of playlists]])
-	local playlist = {}
 	for i=7, #(library) do
-		table.insert(playlist, {title = library[i]})
+		table.insert(playlist, {title = library[i], fn = os.time()})
 	end
 end
 -- 随机播放列表中曲目
