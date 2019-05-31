@@ -204,7 +204,7 @@ function setmenu2()
 	local _,library,_ = hs.osascript.applescript([[tell application "iTunes" to get name of playlists]])
 	local playlist = {}
 	for i=7, #(library) do
-		table.insert(playlist, {title = library[i], fn = shuffleplay(library[i])})
+		table.insert(playlist, {title = library[i]})
 	end
 end
 -- 随机播放列表中曲目
@@ -236,7 +236,7 @@ end
 function setitunesbar()
 	if hs.itunes.isRunning() then -- 若iTunes正在运行
 		-- 若首次播放则新建menubar item
-		if iTunesBar == nil and hs.itunes.getCurrentTrack() ~= nil then
+		if iTunesBar == nil then
 			iTunesBar = hs.menubar.new()
 		end
 		if hs.itunes.getCurrentTrack() ~= nil then
