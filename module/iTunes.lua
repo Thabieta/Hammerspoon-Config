@@ -247,6 +247,7 @@ function updatemenubar()
 		songdisliked = iTunes.disliked
 		songrating = iTunes.rating
 		settitle()
+print(iTunes.title())
 	end
 end
 -- 创建Menubar
