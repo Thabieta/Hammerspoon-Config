@@ -61,7 +61,7 @@ function windowsManagement(keyFuncTable)
 		hotkey.bind(hyper, key, Resize(opt))
 	end
 end
-hotkey.bind(hyper, 'return', Resize(fullscreen))
+hotkey.bind(hyper, 'return', Resize("fullscreen"))
 windowsManagement({
 		left = halfleft,
 		right = halfright,
