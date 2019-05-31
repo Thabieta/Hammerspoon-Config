@@ -139,19 +139,19 @@ function setmenu()
 	local star3 = false
 	local star2 = false
 	local star1 = false
-	if rating == 5 then
+	if iTunes.rating() == 5 then
 		ratingtitle5 = hs.styledtext.new("⭑⭑⭑⭑⭑", {color = {hex = "#0000FF", alpha = 1}})
 		star5 = true
-	elseif rating == 4 then
+	elseif iTunes.rating() == 4 then
 		ratingtitle4 = hs.styledtext.new("⭑⭑⭑⭑⭐︎", {color = {hex = "#0000FF", alpha = 1}})
 		star4 = true
-	elseif rating == 3 then
+	elseif iTunes.rating() == 3 then
 		ratingtitle3 = hs.styledtext.new("⭑⭑⭑⭐︎⭐︎", {color = {hex = "#0000FF", alpha = 1}})
 		star3 = true
-	elseif rating == 2 then
+	elseif iTunes.rating() == 2 then
 		ratingtitle2 = hs.styledtext.new("⭑⭑⭐︎⭐︎⭐︎", {color = {hex = "#0000FF", alpha = 1}})
 		star2 = true
-	elseif rating == 1 then
+	elseif iTunes.rating() == 1 then
 		ratingtitle1 = hs.styledtext.new("⭑⭐︎⭐︎⭐︎⭐︎", {color = {hex = "#0000FF", alpha = 1}})
 		star1 = true
 	end
