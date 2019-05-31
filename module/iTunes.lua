@@ -155,7 +155,7 @@ function setmenu()
 		ratingtitle1 = hs.styledtext.new("⭑⭐︎⭐︎⭐︎⭐︎", {color = {hex = "#0000FF", alpha = 1}})
 		star1 = true
 	end
-	iTunes.saveartwork
+	iTunes.saveartwork()
 	-- 判断是否为Apple Music
 	local _,kind,_ = hs.osascript.applescript([[tell application "iTunes" to get current track's kind]])
 	if string.len(kind) > 0 then
