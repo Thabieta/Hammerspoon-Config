@@ -13,7 +13,7 @@ function atime()
 timeatime = os.time()
 return timeatime
 end
-abar:setTitle(atime)
+abar:setTitle(os.time())
 abar:setMenu({
 {title = atime},
 })
