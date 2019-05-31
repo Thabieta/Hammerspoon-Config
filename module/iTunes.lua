@@ -9,8 +9,7 @@ local owner = hs.host.localizedName()
 local iTunes = {}
 -- 曲目信息
 iTunes.title = function () 
-	local title = hs.itunes.getCurrentTrack()
-	return title
+	return hs.itunes.getCurrentTrack()
 end
 iTunes.artist = function () 
 	local artist = hs.itunes.getCurrentArtist()
