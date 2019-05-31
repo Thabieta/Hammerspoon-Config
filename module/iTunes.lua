@@ -107,9 +107,9 @@ iTunes.saveartwork = function ()
 			end
 		end
 		if artworkurl ~= nil then
-			local artwork = hs.image.imageFromPath(hs.configdir .. "/currentartwork.jpg")
+			artwork = hs.image.imageFromPath(hs.configdir .. "/currentartwork.jpg")
 		else
-			local artwork = nil
+			artwork = nil
 		end
 	end
 	return artwork
