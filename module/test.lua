@@ -8,3 +8,4 @@ function shuffleplay(playlistname)
 	hs.osascript.applescript(playscript:gsub("pname", "playlistname"))
 end
 print(menulist[1].title)
+print(menulist[1].fn)
