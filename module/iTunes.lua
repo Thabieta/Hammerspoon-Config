@@ -168,7 +168,7 @@ function setmenu()
 		local artwork = hs.image.imageFromPath(hs.configdir .. "/currentartwork." .. ext):setSize({h = 300, w = 300}, absolute == true)
 		imagemenu = {title = "", image = artwork, fn = locate}
 	else
-		local artworkurl = saveartworkam()
+		local artworkurl = iTunes.saveartworkam()
 		if artworkurl ~= nil then
 			local artwork = hs.image.imageFromPath(hs.configdir .. "/currentartwork.jpg")
 			imagemenu = {title = "", image = artwork, fn = locate}
