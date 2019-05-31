@@ -20,6 +20,7 @@ function windowStash(window)
 	end
 end
 -- 窗口动作
+local cwin = hs.window.focusedWindow()
 local cscreen = cwin:screen()
 local cres = cscreen:fullFrame()
 local wf = cwin:frame()
