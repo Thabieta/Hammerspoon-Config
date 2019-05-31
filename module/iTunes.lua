@@ -60,7 +60,7 @@ end
 function saveartwork()
 	if hs.itunes.getCurrentAlbum() ~= songalbum then
 		songalbum = hs.itunes.getCurrentAlbum()
-	hs.osascript.applescript(saveartworkscript)
+		hs.osascript.applescript(saveartworkscript)
 	end
 end
 -- 获取Apple Music曲目的专辑封面
@@ -216,6 +216,19 @@ function updatemenubar()
 		delay(1, setmenu)
 	end
 end
+-- 获取播放列表
+function getplaylist()
+	local _,library,_ = hs.osascript.applescript([[tell application "iTunes" to get name of playlists]])
+	local playlist = {}
+	for i=7, #(library) do
+	    table.insert(playlist, library[i])  
+	end 
+	return playlist
+end
+-- 随机播放列表中曲目
+function shuffleplay(playlistname)
+	hs.osascript.applescript([[tell application "iTunes" to play playlist named playlistname]])
+end
 -- 创建Menubar
 function setitunesbar()
 	if hs.itunes.isRunning() then -- 若iTunes正在运行
@@ -227,6 +240,7 @@ function setitunesbar()
 			updatemenubar()
 		else -- 若iTunes停止播放
 			iTunesBar:setTitle('■停止中')
+			getplaylist()
 			iTunesBar:setMenu({
 			})
 		end
