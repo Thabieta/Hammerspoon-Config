@@ -257,15 +257,10 @@ function setitunesbar()
 		if iTunesBar == nil then
 			iTunesBar = hs.menubar.new()
 		end
-		if hs.itunes.getCurrentTrack() ~= nil then
-			updatemenubar()
-		else -- 若iTunes停止播放
-			setmenu2()
-		end
+		hs.timer.doEvery(1, updatemenubar)
+		iTunesBar:setMenu(setmenu)
 	else -- 若iTunes没有运行
 		deletemenubar()
 	end
-	hs.timer.doAfter(1, setitunesbar)
 end
-iTunesBar:setMenu(setmenu)
 setitunesbar()
