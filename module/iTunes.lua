@@ -170,11 +170,9 @@ function setmenu()
 		else
 			ext = "jpg"
 		end
-		iTunes.saveartwork()
 		local artwork = hs.image.imageFromPath(hs.configdir .. "/currentartwork." .. ext):setSize({h = 300, w = 300}, absolute == true)
 		imagemenu = {title = "", image = artwork, fn = locate}
 	else
-		local artworkurl = iTunes.saveartworkam()
 		if artworkurl ~= nil then
 			local artwork = hs.image.imageFromPath(hs.configdir .. "/currentartwork.jpg")
 			imagemenu = {title = "", image = artwork, fn = locate}
@@ -248,6 +246,8 @@ function updatemenubar()
 		songdisliked = iTunes.disliked()
 		songrating = iTunes.rating()
 		settitle()
+		iTunes.saveartwork()
+		iTunes.saveartworkam()
 	end
 end
 -- 创建Menubar
