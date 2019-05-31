@@ -21,7 +21,6 @@ function windowStash(window)
 end
 -- 窗口动作
 local cwin = hs.window.focusedWindow()
-if cwin then
 local cscreen = cwin:screen()
 local cres = cscreen:fullFrame()
 local wf = cwin:frame()
@@ -59,7 +58,7 @@ Resize.reset = function ()
 		end
 	end
 end
-end
+if cwin then
 hotkey = require "hs.hotkey"
 hyper = {"ctrl", "alt"}
 function windowsManagement(keyFuncTable)
@@ -76,6 +75,7 @@ windowsManagement({
 		c = Resize.center,
 		delete = Resize.reset,
 	})
+end
 --[[
 function Resize(option)
 	local cwin = hs.window.focusedWindow()
