@@ -20,67 +20,6 @@ function windowStash(window)
 	end
 end
 -- 窗口动作
-local cwin = hs.window.focusedWindow()
-local cscreen = cwin:screen()
-local cres = cscreen:fullFrame()
-local wf = cwin:frame()
-local Resize = {}
-Resize.halfleft = function ()
-	cwin = hs.window.focusedWindow()
-	windowStash(cwin)
-	cwin:setFrame({x=cres.x, y=cres.y, w=cres.w/2, h=cres.h})
-end
-Resize.halfright = function ()
-	cwin = hs.window.focusedWindow()
-	windowStash(cwin)
-	cwin:setFrame({x=cres.x+cres.w/2, y=cres.y, w=cres.w/2, h=cres.h})
-end
-Resize.halfup = function ()
-	cwin = hs.window.focusedWindow()
-	windowStash(cwin)
-	cwin:setFrame({x=cres.x, y=cres.y, w=cres.w, h=cres.h/2})
-end
-Resize.halfdown = function ()
-	cwin = hs.window.focusedWindow()
-	windowStash(cwin)
-	cwin:setFrame({x=cres.x, y=cres.y+cres.h/2, w=cres.w, h=cres.h/2})
-end
-Resize.fullscreen = function ()
-	cwin = hs.window.focusedWindow()
-	windowStash(cwin)
-	cwin:setFrame({x=cres.x, y=cres.y, w=cres.w, h=cres.h})
-end
-Resize.center = function ()
-	cwin = hs.window.focusedWindow()
-	windowStash(cwin)
-	cwin:centerOnScreen()
-end
-Resize.reset = function ()
-	cwin = hs.window.focusedWindow()
-	local cwinid = cwin:id()
-	for idx,val in ipairs(winhistory) do
-		if val[1] == cwinid then
-			cwin:setFrame(val[2])
-		end
-	end
-end
-hotkey = require "hs.hotkey"
-hyper = {"ctrl", "alt"}
-function windowsManagement(keyFuncTable)
-	for key,fn in pairs(keyFuncTable) do
-		hotkey.bind(hyper, key, fn)
-	end
-end
-hotkey.bind(hyper, 'return', Resize.fullscreen)
-windowsManagement({
-		left = Resize.halfleft,
-		right = Resize.halfright,
-		up = Resize.halfup,
-		down = Resize.halfdown,
-		c = Resize.center,
-		delete = Resize.reset,
-	})
---[[
 function Resize(option)
 	local cwin = hs.window.focusedWindow()
 	if cwin then
@@ -106,24 +45,32 @@ function Resize(option)
 			windowStash(cwin)
 			cwin:centerOnScreen()
 		elseif option == "reset" then
-			local cwin = hs.window.focusedWindow()
 			local cwinid = cwin:id()
 			for idx,val in ipairs(winhistory) do
 				if val[1] == cwinid then
 					cwin:setFrame(val[2])
 				end
 			end
-		elseif option == "expand" then
-			cwin:setFrame({x=wf.x-stepw, y=wf.y-steph, w=wf.w+(stepw*2), h=wf.h+(steph*2)})
-		elseif option == "shrink" then
-			cwin:setFrame({x=wf.x+stepw, y=wf.y+steph, w=wf.w-(stepw*2), h=wf.h-(steph*2)})
-		else
-			hs.alert.show("Unknown option: " .. option)
 		end
-	else
-		hs.alert.show("ウィンドウは指定されていません！")
 	end
 end
+hotkey = require "hs.hotkey"
+hyper = {"ctrl", "alt"}
+function windowsManagement(keyFuncTable)
+	for key,opt in pairs(keyFuncTable) do
+		hotkey.bind(hyper, key, Resize(opt))
+	end
+end
+hotkey.bind(hyper, 'return', Resize(fullscreen))
+windowsManagement({
+		left = halfleft,
+		right = halfright,
+		up = halfup,
+		down = halfdown,
+		c = center,
+		delete = reset,
+	})
+--[[
 -- 撤销最近一次动作
 function Undo()
 	local cwin = hs.window.focusedWindow()
