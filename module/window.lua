@@ -57,18 +57,18 @@ end
 hotkey = require "hs.hotkey"
 hyper = {"ctrl", "alt"}
 function windowsManagement(keyFuncTable)
-	for key,opt in pairs(keyFuncTable) do
-		hotkey.bind(hyper, key, Resize(opt))
+	for key,fn in pairs(keyFuncTable) do
+		hotkey.bind(hyper, key, fn)
 	end
 end
 hotkey.bind(hyper, 'return', Resize("fullscreen"))
 windowsManagement({
-		left = halfleft,
-		right = halfright,
-		up = halfup,
-		down = halfdown,
-		c = center,
-		delete = reset,
+		left = Resize("halfright"),
+		right = Resize("halfleft"),
+		up = Resize("halfup"),
+		down = Resize("halfdown"),
+		c = Resize("center"),
+		delete = Resize("reset"),
 	})
 --[[
 -- 撤销最近一次动作
