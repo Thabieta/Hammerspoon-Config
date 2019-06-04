@@ -271,6 +271,5 @@ function setitunesbar()
 	end
 	hs.timer.doAfter(1, setitunesbar)
 end
-setmenu
 setitunesbar()
 iTunesBar:setMenu(setmenu)
