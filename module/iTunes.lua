@@ -135,9 +135,9 @@ function settitle()
 			iTunesBar:setTitle('🎵' .. iTunes.title())
 		end
 	elseif iTunes.state() == "paused" then
-		iTunesBar:setTitle('⎮⎮' .. iTunes.title() .. ' - ' .. iTunes.artist())
+		iTunesBar:setTitle('🎶' .. iTunes.title() .. ' - ' .. iTunes.artist())
 	elseif iTunes.state() == "stopped" then
-		iTunesBar:setTitle('■停止中')
+		iTunesBar:setTitle('▪️停止中')
 	end
 end
 -- 创建菜单
