@@ -230,7 +230,7 @@ function setmenu()
 		for i=7, #(library) do
 			local playscript = [[tell application "iTunes" to play playlist named pname]]
 			local playlistscript = playscript:gsub("pname",  "\"" .. library[i] .. "\"")
-			table.insert(iTunesBarMenu, {title = library[i]})
+			table.insert(iTunesBarMenu, {title = library[i], function() hs.osascript.applescript(playlistscript) end})
 		end		
 	end
 	return iTunesBarMenu
@@ -270,3 +270,16 @@ function setitunesbar()
 end
 setitunesbar()
 iTunesBar:setMenu(setmenu)
+
+
+
+
+local iTunesShuffleplay = {}
+		local iTunesBarMenu = {}
+		local _,library,_ = hs.osascript.applescript([[tell application "iTunes" to get name of playlists]])
+		for i=7, #(library) do
+			local playscript = [[tell application "iTunes" to play playlist named pname]]
+			local playlistscript = playscript:gsub("pname",  "\"" .. library[i] .. "\"")
+			table.insert(iTunesBarMenu, {title = library[i], function() hs.osascript.applescript(playlistscript) end})
+print(iTunesBarMenu[i].title)
+		end
