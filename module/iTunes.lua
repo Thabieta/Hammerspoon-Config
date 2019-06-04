@@ -283,3 +283,4 @@ function setitunesbar()
 end
 setitunesbar()
 iTunesBar:setMenu(setmenu)
+print(iTunes.state)
