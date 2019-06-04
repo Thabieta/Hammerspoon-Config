@@ -275,5 +275,5 @@ setitunesbar()
 iTunesBar:setMenu(setmenu)
 local _,library,_ = hs.osascript.applescript([[tell application "iTunes" to get name of playlists]])
 local playscript = [[tell application "iTunes" to play playlist named pname]]
-local playlistscript = playscript:gsub("pname", library[7])
+local playlistscript = playscript:gsub("pname", "'" .. library[7] .. "'")
 print(playlistscript)
