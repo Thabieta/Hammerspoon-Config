@@ -23,8 +23,6 @@ end
 -- 窗口定义
 function windowMeta.new()
 	local self = setmetatable(windowMeta, {
-			-- Treate table like a function
-			-- Event listener when windowMeta() is called
 			__call = function (cls, ...)
 				return cls.new(...)
 			end,
@@ -94,6 +92,17 @@ windowsManagement({
 		delete = Resize.reset,
 	})
 --[[
+-- 撤销最近一次动作
+function Undo()
+	local cwin = hs.window.focusedWindow()
+	local cwinid = cwin:id()
+	for idx,val in ipairs(winhistory) do
+        -- Has this window been stored previously?
+		if val[1] == cwinid then
+			cwin:setFrame(val[2])
+		end
+	end
+end
 function Resize(option)
 	local cwin = hs.window.focusedWindow()
 	if cwin then
@@ -130,31 +139,6 @@ function Resize(option)
 end
 hotkey = require "hs.hotkey"
 hyper = {"ctrl", "alt"}
-function windowsManagement(keyFuncTable)
-	for key,fn in pairs(keyFuncTable) do
-		hotkey.bind(hyper, key, fn)
-	end
-end
-hotkey.bind(hyper, 'return', Resize("fullscreen"))
-windowsManagement({
-		left = Resize("halfright"),
-		right = Resize("halfleft"),
-		up = Resize("halfup"),
-		down = Resize("halfdown"),
-		c = Resize("center"),
-		delete = Resize("reset"),
-	})
--- 撤销最近一次动作
-function Undo()
-	local cwin = hs.window.focusedWindow()
-	local cwinid = cwin:id()
-	for idx,val in ipairs(winhistory) do
-        -- Has this window been stored previously?
-		if val[1] == cwinid then
-			cwin:setFrame(val[2])
-		end
-	end
-end
 hotkey.bind(hyper, 'right', function() Resize("halfright") end)
 hotkey.bind(hyper, 'left', function() Resize("halfleft") end) 
 hotkey.bind(hyper, 'up', function() Resize("halfup") end)
