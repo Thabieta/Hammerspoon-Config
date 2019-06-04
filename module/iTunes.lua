@@ -273,6 +273,6 @@ function setitunesbar()
 end
 setitunesbar()
 iTunesBar:setMenu({
-			{title = "🎸" .. iTunes.title(), fn = iTunes.locate()},
-			{title = "👩🏻‍🎤" .. iTunes.artist(), fn = iTunes.locate()},
-			{title = "💿" .. iTunes.album(), fn = iTunes.locate()}})
+			{title = "🎸" .. iTunes.title(), fn = iTunes.locate},
+			{title = "👩🏻‍🎤" .. iTunes.artist(), fn = iTunes.locate},
+			{title = "💿" .. iTunes.album(), fn = iTunes.locate}})
