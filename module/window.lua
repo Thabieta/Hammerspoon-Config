@@ -1,5 +1,6 @@
 hs.window.animationDuration = 0
 local winhistory = {}
+local windowMeta = {}
 -- 记录窗口初始位置
 function windowStash(window)
 	local winid = window:id()
@@ -19,7 +20,80 @@ function windowStash(window)
 		table.insert(winhistory, winstru) 
 	end
 end
+-- 窗口定义
+function currentwindow()
+	local self = setmetatable(windowMeta, {
+			-- Treate table like a function
+			-- Event listener when windowMeta() is called
+			__call = function (cls, ...)
+				return cls.new(...)
+			end,
+		})
+	self.window = hs.window.focusedWindow()
+	self.screen = self.window:screen()
+	self.resolution = self.screen:fullFrame()
+	self.windowGrid = hs.grid.get(self.window)
+	self.screenGrid = hs.grid.getGrid(self.screen)
+	return self
+end
 -- 窗口动作
+local Resize = {}
+Resize.halfleft = function ()
+	local this = windowMeta.new()
+	windowStash(this.window)
+	this.window:setFrame({x=cres.x, y=cres.y, w=cres.w/2, h=cres.h})
+end
+Resize.halfright = function ()
+	local this = windowMeta.new()
+	windowStash(this.window)
+	this.window:setFrame({x=cres.x+cres.w/2, y=cres.y, w=cres.w/2, h=cres.h})
+end
+Resize.halfup = function ()
+	local this = windowMeta.new()
+	windowStash(this.window)
+	this.window:setFrame({x=cres.x, y=cres.y, w=cres.w, h=cres.h/2})
+end
+Resize.halfdown = function ()
+	local this = windowMeta.new()
+	windowStash(this.window)
+	this.window:setFrame({x=cres.x, y=cres.y+cres.h/2, w=cres.w, h=cres.h/2})
+end
+Resize.fullscreen = function ()
+	local this = windowMeta.new()
+	windowStash(this.window)
+	this.window:setFrame({x=cres.x, y=cres.y, w=cres.w, h=cres.h})
+end
+Resize.center = function ()
+	local this = windowMeta.new()
+	windowStash(this.window)
+	this.window:centerOnScreen()
+end
+Resize.reset = function ()
+	local this = windowMeta.new()
+	local thisid = this.window:id()
+	for idx,val in ipairs(winhistory) do
+		if val[1] == thisid then
+			this.window:setFrame(val[2])
+		end
+	end
+end
+hotkey = require "hs.hotkey"
+hyper = {"ctrl", "alt"}
+function windowsManagement(keyFuncTable)
+	for key,fn in pairs(keyFuncTable) do
+		hotkey.bind(hyper, key, fn)
+	end
+end
+hotkey.bind(hyper, 'return', Resize.fullscreen)
+windowsManagement({
+		left = Resize.halfleft,
+		right = Resize.halfright,
+		up = Resize.halfup,
+		down = Resize.halfdown,
+		c = Resize.center,
+		delete = Resize.reset,
+	})
+--[[
 function Resize(option)
 	local cwin = hs.window.focusedWindow()
 	if cwin then
@@ -70,7 +144,6 @@ windowsManagement({
 		c = Resize("center"),
 		delete = Resize("reset"),
 	})
---[[
 -- 撤销最近一次动作
 function Undo()
 	local cwin = hs.window.focusedWindow()
