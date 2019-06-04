@@ -237,7 +237,7 @@ function setmenu()
 		local _,library,_ = hs.osascript.applescript([[tell application "iTunes" to get name of playlists]])
 		local iTunesBarMenu = {}
 		for i=7, #(library) do
-			table.insert(iTunesBarMenu, {title = library[i], fn = iTunesShuffleplay.i})
+			table.insert(iTunesBarMenu, {title = library[i], fn = iTunesShuffleplay.i()})
 		end
 	end
 	return iTunesBarMenu
