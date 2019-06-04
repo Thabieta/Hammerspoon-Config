@@ -21,7 +21,7 @@ function windowStash(window)
 	end
 end
 -- 窗口定义
-function currentwindow()
+function windowMeta.new()
 	local self = setmetatable(windowMeta, {
 			-- Treate table like a function
 			-- Event listener when windowMeta() is called
