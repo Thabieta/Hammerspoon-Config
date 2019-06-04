@@ -187,7 +187,7 @@ function setmenu()
 			star1 = true
 		end
 		if artwork ~= nil then
-			imagemenu = {title = "", image = artwork, fn = locate}
+			imagemenu = {title = "", image = artwork, fn = iTunes.locate()}
 		else
 			imgaemenu = {}
 		end
