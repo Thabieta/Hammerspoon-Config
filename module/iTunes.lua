@@ -133,16 +133,15 @@ function deletemenubar()
 end
 -- 创建标题
 function settitle()
-	local itunesinfo = iTunes.title() .. ' - ' .. iTunes.artist()
 	if iTunes.state() == "playing" then
-		local infolength = string.len(itunesinfo)
+		local infolength = string.len(iTunes.title() .. ' - ' .. iTunes.artist())
 		if infolength < 90 then
-			iTunesBar:setTitle('🎵' .. itunesinfo)
+			iTunesBar:setTitle('🎵' .. iTunes.title() .. ' - ' .. iTunes.artist())
 		else
 			iTunesBar:setTitle('🎵' .. iTunes.title())
 		end
 	elseif iTunes.state() == "paused" then
-		iTunesBar:setTitle('⏸' .. itunesinfo)
+		iTunesBar:setTitle('⏸' .. iTunes.title() .. ' - ' .. iTunes.artist())
 	elseif iTunes.state() == "stopped" then
 		iTunesBar:setTitle('⏹停止中')
 	end
@@ -285,4 +284,3 @@ function setitunesbar()
 end
 setitunesbar()
 iTunesBar:setMenu(setmenu)
-print(iTunes.state())
