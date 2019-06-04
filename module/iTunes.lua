@@ -134,16 +134,16 @@ end
 -- 创建标题
 function settitle()
 	local itunesinfo = iTunes.title() .. ' - ' .. iTunes.artist()
-	if iTunes.state == "playing" then
+	if iTunes.state() == "playing" then
 		local infolength = string.len(itunesinfo)
 		if infolength < 90 then
 			iTunesBar:setTitle('🎵' .. itunesinfo)
 		else
 			iTunesBar:setTitle('🎵' .. iTunes.title())
 		end
-	elseif iTunes.state == "paused" then
+	elseif iTunes.state() == "paused" then
 		iTunesBar:setTitle('⏸' .. itunesinfo)
-	elseif iTunes.state == "stopped" then
+	elseif iTunes.state() == "stopped" then
 		iTunesBar:setTitle('⏹停止中')
 	end
 end
