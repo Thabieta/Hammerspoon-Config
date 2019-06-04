@@ -250,15 +250,17 @@ function delay(gap, func)
 end
 -- 更新Menubar
 function updatemenubar()
-	if iTunes.title() ~= songtitle or iTunes.loved() ~= songloved or iTunes.disliked() ~= songdisliked or iTunes.rating() ~= songrating then --若更换了曲目
-		songtitle = iTunes.title()
-		songloved = iTunes.loved()
-		songdisliked = iTunes.disliked()
-		songrating = iTunes.rating()
-		settitle()
-		--delay(1, iTunes.saveartwork)
-		iTunes.saveartwork()
+	if iTunes.state() ~= "stopped" then
+		if iTunes.title() ~= songtitle or iTunes.loved() ~= songloved or iTunes.disliked() ~= songdisliked or iTunes.rating() ~= songrating then --若更换了曲目
+			songtitle = iTunes.title()
+			songloved = iTunes.loved()
+			songdisliked = iTunes.disliked()
+			songrating = iTunes.rating()
+		end
 	end
+	settitle()
+	--delay(1, iTunes.saveartwork)
+	iTunes.saveartwork()
 end
 -- 创建Menubar
 function setitunesbar()
