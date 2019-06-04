@@ -281,5 +281,5 @@ local iTunesShuffleplay = {}
 			local playscript = [[tell application "iTunes" to play playlist named pname]]
 			local playlistscript = playscript:gsub("pname",  "\"" .. library[i] .. "\"")
 			table.insert(iTunesBarMenu, {title = library[i], function() hs.osascript.applescript(playlistscript) end})
-print(iTunesBarMenu[i].title)
+print(iTunesBarMenu[i-6].title)
 		end
