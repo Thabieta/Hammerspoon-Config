@@ -41,27 +41,27 @@ local Resize = {}
 Resize.halfleft = function ()
 	local this = windowMeta.new()
 	windowStash(this.window)
-	this.window:setFrame({x=cres.x, y=cres.y, w=cres.w/2, h=cres.h})
+	this.window:setFrame({x=this.resolution.x, y=this.resolution.y, w=this.resolution.w/2, h=this.resolution.h})
 end
 Resize.halfright = function ()
 	local this = windowMeta.new()
 	windowStash(this.window)
-	this.window:setFrame({x=cres.x+cres.w/2, y=cres.y, w=cres.w/2, h=cres.h})
+	this.window:setFrame({x=this.resolution.x+this.resolution.w/2, y=this.resolution.y, w=this.resolution.w/2, h=this.resolution.h})
 end
 Resize.halfup = function ()
 	local this = windowMeta.new()
 	windowStash(this.window)
-	this.window:setFrame({x=cres.x, y=cres.y, w=cres.w, h=cres.h/2})
+	this.window:setFrame({x=this.resolution.x, y=this.resolution.y, w=this.resolution.w, h=this.resolution.h/2})
 end
 Resize.halfdown = function ()
 	local this = windowMeta.new()
 	windowStash(this.window)
-	this.window:setFrame({x=cres.x, y=cres.y+cres.h/2, w=cres.w, h=cres.h/2})
+	this.window:setFrame({x=this.resolution.x, y=this.resolution.y+this.resolution.h/2, w=this.resolution.w, h=this.resolution.h/2})
 end
 Resize.fullscreen = function ()
 	local this = windowMeta.new()
 	windowStash(this.window)
-	this.window:setFrame({x=cres.x, y=cres.y, w=cres.w, h=cres.h})
+	this.window:setFrame({x=this.resolution.x, y=this.resolution.y, w=this.resolution.w, h=this.resolution.h})
 end
 Resize.center = function ()
 	local this = windowMeta.new()
