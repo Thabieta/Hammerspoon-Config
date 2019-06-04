@@ -230,7 +230,7 @@ function setmenu()
 				}
 	--[[else
 		-- 获取播放列表
-	--	local _,library,_ = hs.osascript.applescript([[tell application "iTunes" to get name of playlists]])
+	--	local _,library,_ = hs.osascript.applescript([[tell application "iTunes" to get name of playlists]]--)
 	--	local iTunesBarMenu = {}
 	--	for i=7, #(library) do
 	--		table.insert(iTunesBarMenu, {title = library[i], fn = iTunes.shuffleplay(library[i])})
