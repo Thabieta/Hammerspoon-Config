@@ -148,7 +148,7 @@ function settitle()
 end
 -- 创建菜单
 function setmenu()
-	--if iTunes.state() ~= "stopped" then
+	if iTunes.state() ~= "stopped" then
 		if iTunes.loved() == true then
 			lovedtitle = "❤️ラブ済み"
 		else
