@@ -148,49 +148,50 @@ function settitle()
 end
 -- 创建菜单
 function setmenu()
-	if iTunes.loved() == true then
-		lovedtitle = "❤️ラブ済み"
-	else
-		lovedtitle = "🖤ラブ"
-	end
-	if iTunes.disliked() == true then
-		dislikedtitle = "💔好きじゃない済み"
-	else
-		dislikedtitle = "🖤好きじゃない"
-	end
-	local ratingtitle5 = "⭑⭑⭑⭑⭑"
-	local ratingtitle4 = "⭑⭑⭑⭑⭐︎"
-	local ratingtitle3 = "⭑⭑⭑⭐︎⭐︎"
-	local ratingtitle2 = "⭑⭑⭐︎⭐︎⭐︎"
-	local ratingtitle1 = "⭑⭐︎⭐︎⭐︎⭐︎"
-	local star5 = false
-	local star4 = false
-	local star3 = false
-	local star2 = false
-	local star1 = false
-	if iTunes.rating() == 5 then
-		ratingtitle5 = hs.styledtext.new("⭑⭑⭑⭑⭑", {color = {hex = "#0000FF", alpha = 1}})
-		star5 = true
-	elseif iTunes.rating() == 4 then
-		ratingtitle4 = hs.styledtext.new("⭑⭑⭑⭑⭐︎", {color = {hex = "#0000FF", alpha = 1}})
-		star4 = true
-	elseif iTunes.rating() == 3 then
-		ratingtitle3 = hs.styledtext.new("⭑⭑⭑⭐︎⭐︎", {color = {hex = "#0000FF", alpha = 1}})
-		star3 = true
-	elseif iTunes.rating() == 2 then
-		ratingtitle2 = hs.styledtext.new("⭑⭑⭐︎⭐︎⭐︎", {color = {hex = "#0000FF", alpha = 1}})
-		star2 = true
-	elseif iTunes.rating() == 1 then
-		ratingtitle1 = hs.styledtext.new("⭑⭐︎⭐︎⭐︎⭐︎", {color = {hex = "#0000FF", alpha = 1}})
-		star1 = true
-	end
-	if artwork ~= nil then
-		imagemenu = {title = "", image = artwork, fn = locate}
-	else
-		imgaemenu = {}
-	end
-	if owner == "鳳凰院カミのMacBook Pro" then
-		lovedmenu = {title = lovedtitle, fn = function() hs.osascript.applescript([[
+	if iTunes.state() == "stopped" then
+		if iTunes.loved() == true then
+			lovedtitle = "❤️ラブ済み"
+		else
+			lovedtitle = "🖤ラブ"
+		end
+		if iTunes.disliked() == true then
+			dislikedtitle = "💔好きじゃない済み"
+		else
+			dislikedtitle = "🖤好きじゃない"
+		end
+		local ratingtitle5 = "⭑⭑⭑⭑⭑"
+		local ratingtitle4 = "⭑⭑⭑⭑⭐︎"
+		local ratingtitle3 = "⭑⭑⭑⭐︎⭐︎"
+		local ratingtitle2 = "⭑⭑⭐︎⭐︎⭐︎"
+		local ratingtitle1 = "⭑⭐︎⭐︎⭐︎⭐︎"
+		local star5 = false
+		local star4 = false
+		local star3 = false
+		local star2 = false
+		local star1 = false
+		if iTunes.rating() == 5 then
+			ratingtitle5 = hs.styledtext.new("⭑⭑⭑⭑⭑", {color = {hex = "#0000FF", alpha = 1}})
+			star5 = true
+		elseif iTunes.rating() == 4 then
+			ratingtitle4 = hs.styledtext.new("⭑⭑⭑⭑⭐︎", {color = {hex = "#0000FF", alpha = 1}})
+			star4 = true
+		elseif iTunes.rating() == 3 then
+			ratingtitle3 = hs.styledtext.new("⭑⭑⭑⭐︎⭐︎", {color = {hex = "#0000FF", alpha = 1}})
+			star3 = true
+		elseif iTunes.rating() == 2 then
+			ratingtitle2 = hs.styledtext.new("⭑⭑⭐︎⭐︎⭐︎", {color = {hex = "#0000FF", alpha = 1}})
+			star2 = true
+		elseif iTunes.rating() == 1 then
+			ratingtitle1 = hs.styledtext.new("⭑⭐︎⭐︎⭐︎⭐︎", {color = {hex = "#0000FF", alpha = 1}})
+			star1 = true
+		end
+		if artwork ~= nil then
+			imagemenu = {title = "", image = artwork, fn = locate}
+		else
+			imgaemenu = {}
+		end
+		if owner == "鳳凰院カミのMacBook Pro" then
+			lovedmenu = {title = lovedtitle, fn = function() hs.osascript.applescript([[
 						tell application "iTunes"
 							if current track's loved is false then
 								set current track's loved to true
@@ -199,7 +200,7 @@ function setmenu()
 							end if
 						end tell
 						]]) end}
-		dislikedmenu = {title = dislikedtitle, fn = function() hs.osascript.applescript([[
+			dislikedmenu = {title = dislikedtitle, fn = function() hs.osascript.applescript([[
 						tell application "iTunes"
 							if current track's disliked is false then
 								set current track's disliked to true
@@ -208,39 +209,35 @@ function setmenu()
 							end if
 						end tell
 						]]) end}
+		else
+			lovedmenu = {}
+			dislikedmenu = {}
+		end
+		-- 显示菜单
+		local iTunesBarMenu = {
+				imagemenu,
+				{title = "🎸" .. iTunes.title(), fn = locate},
+				{title = "👩🏻‍🎤" .. iTunes.artist(), fn = locate},
+				{title = "💿" .. iTunes.album(), fn = locate},
+				{title = "-"},
+				lovedmenu,
+				dislikedmenu,
+				{title = ratingtitle5, checked = star5, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 100]]) end},
+				{title = ratingtitle4, checked = star4, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 80]]) end},
+				{title = ratingtitle3, checked = star3, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 60]]) end},
+				{title = ratingtitle2, checked = star2, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 40]]) end},
+				{title = ratingtitle1, checked = star1, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 20]]) end},
+				}
 	else
-		lovedmenu = {}
-		dislikedmenu = {}
-	end
-	-- 显示菜单
-	local iTunesBarMenu = {
-			imagemenu,
-			{title = "🎸" .. iTunes.title(), fn = locate},
-			{title = "👩🏻‍🎤" .. iTunes.artist(), fn = locate},
-			{title = "💿" .. iTunes.album(), fn = locate},
-			{title = "-"},
-			lovedmenu,
-			dislikedmenu,
-			{title = ratingtitle5, checked = star5, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 100]]) end},
-			{title = ratingtitle4, checked = star4, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 80]]) end},
-			{title = ratingtitle3, checked = star3, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 60]]) end},
-			{title = ratingtitle2, checked = star2, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 40]]) end},
-			{title = ratingtitle1, checked = star1, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 20]]) end},
-			}
-	return iTunesBarMenu
-end
--- 创建菜单（停止时）
-function setmenustop()
-	-- 获取播放列表
-	local _,library,_ = hs.osascript.applescript([[tell application "iTunes" to get name of playlists]])
-	local playlist = {}
-	for i=7, #(library) do
-		table.insert(playlist, {title = library[i], fn = shuffleplay(library[i])})
-	end
-	if iTunesBar:title() ~= '■停止中' then
-		iTunesBar:setTitle('■停止中')
+		-- 获取播放列表
+		local _,library,_ = hs.osascript.applescript([[tell application "iTunes" to get name of playlists]])
+		local playlist = {}
+		for i=7, #(library) do
+			table.insert(playlist, {title = library[i], fn = shuffleplay(library[i])})
+		end
 		iTunesBar:setMenu(playlist)
 	end
+	return iTunesBarMenu
 end
 -- 延迟函数
 function delay(gap, func)
@@ -270,13 +267,6 @@ function setitunesbar()
 			iTunesBar:setTitle('🎵iTunes')
 		end
 		updatemenubar()
---[[
-		if iTunes.title() ~= nil then
-			updatemenubar()
-		else -- 若iTunes停止播放
-			setmenustop()
-		end
---]]
 	else -- 若iTunes没有运行
 		deletemenubar()
 	end
