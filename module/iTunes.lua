@@ -272,4 +272,7 @@ function setitunesbar()
 	hs.timer.doAfter(1, setitunesbar)
 end
 setitunesbar()
-iTunesBar:setMenu(setmenu)
+iTunesBar:setMenu({
+			{title = "🎸" .. iTunes.title(), fn = iTunes.locate()},
+			{title = "👩🏻‍🎤" .. iTunes.artist(), fn = iTunes.locate()},
+			{title = "💿" .. iTunes.album(), fn = iTunes.locate()},)
