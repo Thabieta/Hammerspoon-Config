@@ -255,11 +255,11 @@ function updatemenubar()
 			songloved = iTunes.loved()
 			songdisliked = iTunes.disliked()
 			songrating = iTunes.rating()
+			iTunes.saveartwork()
 		end
 	end
 	settitle()
 	--delay(1, iTunes.saveartwork)
-	iTunes.saveartwork()
 end
 -- 创建Menubar
 function setitunesbar()
