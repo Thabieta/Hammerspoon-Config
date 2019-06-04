@@ -119,12 +119,12 @@ iTunes.saveartwork = function ()
 	return artwork
 end
 -- 随机播放列表中曲目
-local iTunes.shuffleplay = {}
+local iTunesShuffleplay = {}
 local _,library,_ = hs.osascript.applescript([[tell application "iTunes" to get name of playlists]])
 for i=7, #(library) do
 	local playscript = [[tell application "iTunes" to play playlist named pname]]
 	local playlistscript = playscript:gsub("pname",  "\"" .. library[i] .. "\"")
-	iTunes.shuffleplay.library[i] = function ()
+	iTunesShuffleplay.library[i] = function ()
 		hs.osascript.applescript(playlistscript)
 	end
 end
