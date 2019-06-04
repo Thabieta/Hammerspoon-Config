@@ -33,7 +33,7 @@ iTunes.rating = function ()
 	return rating
 end
 iTunes.state = function () 
-	local _,state,_ = hs.osascript.applescript([[tell application "iTunes" to get player state]])
+	local _,state,_ = hs.osascript.applescript([[tell application "iTunes" to get player state as string]])
 	return state
 end
 -- 跳转至当前播放的歌曲
