@@ -230,7 +230,7 @@ function setmenu()
 		for i=7, #(library) do
 			local playscript = [[tell application "iTunes" to play playlist named pname]]
 			local playlistscript = playscript:gsub("pname",  "\"" .. library[i] .. "\"")
-			table.insert(iTunesBarMenu, {title = library[i], fn = function() hs.osascript.applescript(playlistscript) end})
+			table.insert(iTunesBarMenu, {title = library[i], })
 		end		
 	end
 	return iTunesBarMenu
