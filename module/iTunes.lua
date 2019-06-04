@@ -124,7 +124,7 @@ local _,library,_ = hs.osascript.applescript([[tell application "iTunes" to get 
 for i=7, #(library) do
 	local playscript = [[tell application "iTunes" to play playlist named pname]]
 	local playlistscript = playscript:gsub("pname",  "\"" .. library[i] .. "\"")
-	iTunesShuffleplay.library[i] = function ()
+	iTunesShuffleplay.(library[i]) = function ()
 		hs.osascript.applescript(playlistscript)
 	end
 end
