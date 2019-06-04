@@ -119,10 +119,14 @@ iTunes.saveartwork = function ()
 	return artwork
 end
 -- 随机播放列表中曲目
-iTunes.shuffleplay = function (playlistname)
+local iTunes.shuffleplay = {}
+local _,library,_ = hs.osascript.applescript([[tell application "iTunes" to get name of playlists]])
+for i=7, #(library) do
 	local playscript = [[tell application "iTunes" to play playlist named pname]]
-	local playlistscript = playscript:gsub("pname",  "\"" .. playlistname .. "\"")
-	hs.osascript.applescript(playlistscript)
+	local playlistscript = playscript:gsub("pname",  "\"" .. library[i] .. "\"")
+	iTunes.locate.library[i] = function ()
+		hs.osascript.applescript(playlistscript)
+	end
 end
 -- menubar函数集 --
 -- 删除Menubar
@@ -233,7 +237,7 @@ function setmenu()
 		local _,library,_ = hs.osascript.applescript([[tell application "iTunes" to get name of playlists]])
 		local iTunesBarMenu = {}
 		for i=7, #(library) do
-			table.insert(iTunesBarMenu, {title = library[i], fn = iTunes.shuffleplay(library[i])})
+			table.insert(iTunesBarMenu, {title = library[i], fn = iTunes.shuffleplay.library[i]})
 		end
 	end
 	return iTunesBarMenu
