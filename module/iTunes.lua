@@ -45,6 +45,16 @@ iTunes.locate = function ()
 		end tell
 				]])
 end
+-- 随机播放指定播放列表中曲目
+iTunes.shuffleplay = function (playlist)
+	local _,shuffle,_ = hs.osascript.applescript([[tell application "iTunes" to get shuffle enabled]])
+	if shuffle == false then
+		hs.osascript.applescript([[tell application "iTunes" to set shuffle enabled to true]])
+	end
+	local playscript = [[tell application "iTunes" to play playlist named pname]]
+	local playlistscript = playscript:gsub("pname", playlist)
+	hs.osascript.applescript(playlistscript)
+end
 -- 保存专辑封面
 iTunes.saveartwork = function ()
 	-- 判断是否为Apple Music
@@ -226,10 +236,10 @@ function setmenu()
 		-- 获取播放列表并生成菜单
 		local iTunesBarMenu = {}
 		local _,library,_ = hs.osascript.applescript([[tell application "iTunes" to get name of playlists]])
-		local playscript = [[tell application "iTunes" to play playlist named pname]]
+--local playscript = [[tell application "iTunes" to play playlist named pname]]
 		for i=7, #(library) do
-			playlistscript = playscript:gsub("pname",  "\"" .. library[i] .. "\"")
-			table.insert(iTunesBarMenu, {title = library[i], fn = function() hs.osascript.applescript(playlistscript) end})
+--playlistscript = playscript:gsub("pname",  "\"" .. library[i] .. "\"")
+			table.insert(iTunesBarMenu, {title = library[i], fn = function() iTunes.shuffleplay(library[i]) end})
 		end
 		return iTunesBarMenu
 	end
