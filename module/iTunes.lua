@@ -141,9 +141,9 @@ function settitle()
 			iTunesBar:setTitle('🎵' .. iTunes.title())
 		end
 	elseif iTunes.state() == "paused" then
-		iTunesBar:setTitle('⏸' .. iTunes.title() .. ' - ' .. iTunes.artist())
+		iTunesBar:setTitle('⎮⎮' .. iTunes.title() .. ' - ' .. iTunes.artist())
 	elseif iTunes.state() == "stopped" then
-		iTunesBar:setTitle('⏹停止中')
+		iTunesBar:setTitle('■停止中')
 	end
 end
 -- 创建菜单
@@ -186,7 +186,7 @@ function setmenu()
 			star1 = true
 		end
 		if artwork ~= nil then
-			imagemenu = {title = "", image = artwork}
+			imagemenu = {title = "", image = artwork, fn = iTunes.locate()}
 		else
 			imgaemenu = {}
 		end
