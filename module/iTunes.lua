@@ -148,7 +148,7 @@ function settitle()
 end
 -- 创建菜单
 function setmenu()
-	if iTunes.state() ~= "stopped" then
+	--if iTunes.state() ~= "stopped" then
 		if iTunes.loved() == true then
 			lovedtitle = "❤️ラブ済み"
 		else
@@ -228,14 +228,14 @@ function setmenu()
 			{title = ratingtitle2, checked = star2, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 40]]) end},
 			{title = ratingtitle1, checked = star1, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 20]]) end},
 				}
-	else
+	--[[else
 		-- 获取播放列表
-		local _,library,_ = hs.osascript.applescript([[tell application "iTunes" to get name of playlists]])
-		local iTunesBarMenu = {}
-		for i=7, #(library) do
-			table.insert(iTunesBarMenu, {title = library[i], fn = iTunes.shuffleplay(library[i])})
-		end
-	end
+	--	local _,library,_ = hs.osascript.applescript([[tell application "iTunes" to get name of playlists]])
+	--	local iTunesBarMenu = {}
+	--	for i=7, #(library) do
+	--		table.insert(iTunesBarMenu, {title = library[i], fn = iTunes.shuffleplay(library[i])})
+	--	end
+	--end
 	return iTunesBarMenu
 end
 -- 延迟函数
