@@ -217,9 +217,9 @@ function setmenu()
 		-- 显示菜单
 		iTunesBarMenu = {
 			imagemenu,
-			{title = "🎸" .. iTunes.title(), fn = locate},
-			{title = "👩🏻‍🎤" .. iTunes.artist(), fn = locate},
-			{title = "💿" .. iTunes.album(), fn = locate},
+			{title = "🎸" .. iTunes.title(), fn = iTunes.locate()},
+			{title = "👩🏻‍🎤" .. iTunes.artist(), fn = iTunes.locate()},
+			{title = "💿" .. iTunes.album(), fn = iTunes.locate()},
 			{title = "-"},
 			lovedmenu,
 			dislikedmenu,
