@@ -186,7 +186,7 @@ function setmenu()
 			star1 = true
 		end
 		if artwork ~= nil then
-			imagemenu = {title = "", image = artwork, fn = iTunes.locate()}
+			imagemenu = {title = "", image = artwork, fn = iTunes.locate}
 		else
 			imgaemenu = {}
 		end
@@ -216,9 +216,9 @@ function setmenu()
 		-- 显示菜单
 		iTunesBarMenu = {
 			imagemenu,
-			{title = "🎸" .. iTunes.title(), fn = iTunes.locate()},
-			{title = "👩🏻‍🎤" .. iTunes.artist(), fn = iTunes.locate()},
-			{title = "💿" .. iTunes.album(), fn = iTunes.locate()},
+			{title = "🎸" .. iTunes.title(), fn = iTunes.locate},
+			{title = "👩🏻‍🎤" .. iTunes.artist(), fn = iTunes.locate},
+			{title = "💿" .. iTunes.album(), fn = iTunes.locate},
 			{title = "-"},
 			lovedmenu,
 			dislikedmenu,
@@ -271,8 +271,6 @@ function setitunesbar()
 	end
 	hs.timer.doAfter(1, setitunesbar)
 end
+setmenu
 setitunesbar()
-iTunesBar:setMenu({
-			{title = "🎸" .. iTunes.title(), fn = iTunes.locate},
-			{title = "👩🏻‍🎤" .. iTunes.artist(), fn = iTunes.locate},
-			{title = "💿" .. iTunes.album(), fn = iTunes.locate}})
+iTunesBar:setMenu(setmenu)
