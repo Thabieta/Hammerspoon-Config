@@ -32,6 +32,10 @@ iTunes.rating = function ()
 	rating = rating100/20
 	return rating
 end
+iTunes.state = function () 
+	local _,state,_ = hs.osascript.applescript([[tell application "iTunes" to get player state]])
+	return state
+end
 -- 跳转至当前播放的歌曲
 iTunes.locate = function ()
 	hs.osascript.applescript([[
@@ -129,16 +133,18 @@ function deletemenubar()
 end
 -- 创建标题
 function settitle()
-	if iTunes.title ~= nil then
-		local itunesinfo = '🎵' .. iTunes.title() .. ' - ' .. iTunes.artist()
+	local itunesinfo = iTunes.title() .. ' - ' .. iTunes.artist()
+	if iTunes.state == "playing" then
 		local infolength = string.len(itunesinfo)
 		if infolength < 90 then
-			iTunesBar:setTitle(itunesinfo)
+			iTunesBar:setTitle('🎵' .. itunesinfo)
 		else
 			iTunesBar:setTitle('🎵' .. iTunes.title())
 		end
-	else
-		iTunesBar:setTitle('■停止中')
+	elseif iTunes.state == "paused" then
+		iTunesBar:setTitle('⏸' .. itunesinfo)
+	elseif iTunes.state == "stopped" then
+		iTunesBar:setTitle('⏹停止中')
 	end
 end
 -- 创建菜单
