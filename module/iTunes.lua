@@ -121,7 +121,7 @@ end
 -- 随机播放列表中曲目
 iTunes.shuffleplay = function (playlistname)
 	local playscript = [[tell application "iTunes" to play playlist named pname]]
-	local playlistscript = playscript:gsub("pname",  """ .. playlistname .. """)
+	local playlistscript = playscript:gsub("pname",  "\"" .. playlistname .. "\"")
 	hs.osascript.applescript(playlistscript)
 end
 -- menubar函数集 --
