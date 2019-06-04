@@ -214,28 +214,27 @@ function setmenu()
 			dislikedmenu = {}
 		end
 		-- 显示菜单
-		local iTunesBarMenu = {
-				imagemenu,
-				{title = "🎸" .. iTunes.title(), fn = locate},
-				{title = "👩🏻‍🎤" .. iTunes.artist(), fn = locate},
-				{title = "💿" .. iTunes.album(), fn = locate},
-				{title = "-"},
-				lovedmenu,
-				dislikedmenu,
-				{title = ratingtitle5, checked = star5, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 100]]) end},
-				{title = ratingtitle4, checked = star4, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 80]]) end},
-				{title = ratingtitle3, checked = star3, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 60]]) end},
-				{title = ratingtitle2, checked = star2, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 40]]) end},
-				{title = ratingtitle1, checked = star1, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 20]]) end},
+		iTunesBarMenu = {
+			imagemenu,
+			{title = "🎸" .. iTunes.title(), fn = locate},
+			{title = "👩🏻‍🎤" .. iTunes.artist(), fn = locate},
+			{title = "💿" .. iTunes.album(), fn = locate},
+			{title = "-"},
+			lovedmenu,
+			dislikedmenu,
+			{title = ratingtitle5, checked = star5, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 100]]) end},
+			{title = ratingtitle4, checked = star4, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 80]]) end},
+			{title = ratingtitle3, checked = star3, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 60]]) end},
+			{title = ratingtitle2, checked = star2, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 40]]) end},
+			{title = ratingtitle1, checked = star1, fn = function() hs.osascript.applescript([[tell application "iTunes" to set current track's rating to 20]]) end},
 				}
 	else
 		-- 获取播放列表
 		local _,library,_ = hs.osascript.applescript([[tell application "iTunes" to get name of playlists]])
-		local playlist = {}
+	local iTunesBarMenu = {}
 		for i=7, #(library) do
-			table.insert(playlist, {title = library[i], fn = iTunes.shuffleplay(library[i])})
+			table.insert(iTunesBarMenu, {title = library[i], fn = iTunes.shuffleplay(library[i])})
 		end
-		iTunesBar:setMenu(playlist)
 	end
 	return iTunesBarMenu
 end
