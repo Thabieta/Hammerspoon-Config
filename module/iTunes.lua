@@ -282,4 +282,4 @@ local _,library,_ = hs.osascript.applescript([[tell application "iTunes" to get 
 		for i=7, #(library) do
 			table.insert(iTunesBarMenu, {title = library[i], fn = iTunesShuffleplay.i})
 		end
-print(iTunesBarMenu.fn[1])
+print(iTunesBarMenu[1].fn)
