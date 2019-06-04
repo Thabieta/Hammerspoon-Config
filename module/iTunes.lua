@@ -239,7 +239,7 @@ function setmenu()
 --local playscript = [[tell application "iTunes" to play playlist named pname]]
 		for i=7, #(library) do
 --playlistscript = playscript:gsub("pname",  "\"" .. library[i] .. "\"")
-			table.insert(iTunesBarMenu, {title = library[i], fn = function() iTunes.shuffleplay(library[i]) end})
+			table.insert(iTunesBarMenu, {title = library[i], fn = function() iTunes.shuffleplay("\"" .. library[i] .. "\"") end})
 		end
 		return iTunesBarMenu
 	end
