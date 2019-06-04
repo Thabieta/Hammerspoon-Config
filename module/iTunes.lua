@@ -236,9 +236,7 @@ function setmenu()
 		-- 获取播放列表并生成菜单
 		local iTunesBarMenu = {}
 		local _,library,_ = hs.osascript.applescript([[tell application "iTunes" to get name of playlists]])
---local playscript = [[tell application "iTunes" to play playlist named pname]]
 		for i=7, #(library) do
---playlistscript = playscript:gsub("pname",  "\"" .. library[i] .. "\"")
 			table.insert(iTunesBarMenu, {title = library[i], fn = function() iTunes.shuffleplay("\"" .. library[i] .. "\"") end})
 		end
 		return iTunesBarMenu
