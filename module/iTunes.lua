@@ -129,12 +129,16 @@ function deletemenubar()
 end
 -- 创建标题
 function settitle()
-	local itunesinfo = '🎵' .. iTunes.title() .. ' - ' .. iTunes.artist()
-	local infolength = string.len(itunesinfo)
-	if infolength < 90 then
-		iTunesBar:setTitle(itunesinfo)
+	if iTunes.title ~= nil then
+		local itunesinfo = '🎵' .. iTunes.title() .. ' - ' .. iTunes.artist()
+		local infolength = string.len(itunesinfo)
+		if infolength < 90 then
+			iTunesBar:setTitle(itunesinfo)
+		else
+			iTunesBar:setTitle('🎵' .. iTunes.title())
+		end
 	else
-		iTunesBar:setTitle('🎵' .. iTunes.title())
+		iTunesBar:setTitle('■停止中')
 	end
 end
 -- 创建菜单
@@ -258,11 +262,14 @@ function setitunesbar()
 			iTunesBar = hs.menubar.new()
 			iTunesBar:setTitle('🎵iTunes')
 		end
+		updatemenubar()
+--[[
 		if iTunes.title() ~= nil then
 			updatemenubar()
 		else -- 若iTunes停止播放
 			setmenustop()
 		end
+--]]
 	else -- 若iTunes没有运行
 		deletemenubar()
 	end
