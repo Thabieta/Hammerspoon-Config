@@ -116,7 +116,7 @@ iTunes.saveartwork = function ()
 			end
 			return artwork
 		end
-		hs.http.asyncGet(amurl, nil, function() getartwork(status,body,headers) end)
+		hs.http.asyncGet(amurl, nil, function(status,body,headers) getartwork(status,body,headers) end)
 		--[[
 		local status,body,headers = hs.http.get(amurl, nil)
 		getartwork()
