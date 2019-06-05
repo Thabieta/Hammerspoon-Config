@@ -109,7 +109,12 @@ iTunes.saveartwork = function ()
 						artworkfile:saveToFile(hs.configdir .. "/currentartwork.jpg")
 					end
 				end
-				return artworkurl
+				if artworkurl ~= nil then
+					artwork = hs.image.imageFromPath(hs.configdir .. "/currentartwork.jpg")
+				else
+					artwork = nil
+				end
+				return artwork
 			end)
 		--[[
 		local status,body,headers = hs.http.get(amurl, nil)
@@ -122,12 +127,12 @@ iTunes.saveartwork = function ()
 				artworkfile:saveToFile(hs.configdir .. "/currentartwork.jpg")
 			end
 		end
-		--]]
 		if artworkurl ~= nil then
 			artwork = hs.image.imageFromPath(hs.configdir .. "/currentartwork.jpg")
 		else
 			artwork = nil
 		end
+		--]]
 	end
 	return artwork
 end
