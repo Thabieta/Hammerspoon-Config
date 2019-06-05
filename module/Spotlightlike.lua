@@ -2,16 +2,18 @@ local search = nil
 local owner = hs.host.localizedName()
 if owner == "鳳凰院カミのMacBook Pro" then
 	base3 = { name = "ウィキペディア", baseurl = "https://ja.wikipedia.org/wiki/keyword", }
+	base4name = "Google翻訳"
 	tip = "検索したいキーワードを入力"
 else
 	base3 = { name = "Wikipedia", baseurl = "https://en.wikipedia.org/wiki/keyword", }
+	base4name = "Google Translate"
 	tip = "Enter the keywords you want to search"
 end
 local base = {
 		[1] = { name = "百度", baseurl = "https://www.baidu.com/s?wd=keyword", },
 		[2] = { name = "Google", baseurl = "https://www.google.com/search?q=keyword", },
 		[3] = base3,
-		[4] = { name = "Google翻訳", baseurl = "https://translate.google.com/#view=home&op=translate&sl=auto&tl=zh-CN&text=keyword", },
+		[4] = { name = base4name, baseurl = "https://translate.google.com/#view=home&op=translate&sl=auto&tl=zh-CN&text=keyword", },
 	}
 -- 生成搜索列表
 function searchList()
