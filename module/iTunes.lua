@@ -100,16 +100,17 @@ iTunes.saveartwork = function ()
 		local artist = hs.itunes.getCurrentArtist()
 		local amurl = "https://itunes.apple.com/search?term=" .. hs.http.encodeForQuery(album .. " " .. artist) .. "&country=jp&entity=album&limit=1&output=json"
 		hs.http.asyncGet(amurl, nil, function(status,body,headers)
-			if status == 200 then
-				local songdata = hs.json.decode(body)
-				if songdata.resultCount ~= 0 then
-					artworkurl100 = songdata.results[1].artworkUrl100
-					artworkurl = artworkurl100:gsub("100x100", "1000x1000")
-					local artworkfile = hs.image.imageFromURL(artworkurl):setSize({h = 300, w = 300}, absolute == true)
-					artworkfile:saveToFile(hs.configdir .. "/currentartwork.jpg")
+				if status == 200 then
+					local songdata = hs.json.decode(body)
+					if songdata.resultCount ~= 0 then
+						artworkurl100 = songdata.results[1].artworkUrl100
+						artworkurl = artworkurl100:gsub("100x100", "1000x1000")
+						local artworkfile = hs.image.imageFromURL(artworkurl):setSize({h = 300, w = 300}, absolute == true)
+						artworkfile:saveToFile(hs.configdir .. "/currentartwork.jpg")
+					end
 				end
-			end
-		end)
+				return artworkurl
+			end)
 		--[[
 		local status,body,headers = hs.http.get(amurl, nil)
 		if status == 200 then
