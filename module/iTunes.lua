@@ -99,7 +99,7 @@ iTunes.saveartwork = function ()
 		local album = hs.itunes.getCurrentAlbum()
 		local artist = hs.itunes.getCurrentArtist()
 		local amurl = "https://itunes.apple.com/search?term=" .. hs.http.encodeForQuery(album .. " " .. artist) .. "&country=jp&entity=album&limit=1&output=json"
-		local function getartwork()
+		local function getartwork(status,body,headers)
 			if status == 200 then
 				local songdata = hs.json.decode(body)
 				if songdata.resultCount ~= 0 then
@@ -116,9 +116,7 @@ iTunes.saveartwork = function ()
 			end
 			return artwork
 		end
-		hs.http.asyncGet(amurl, nil, function(status,body,headers)
-				getartwork()
-			end)
+		hs.http.asyncGet(amurl, nil, getartwork(status,body,headers))
 		--[[
 		local status,body,headers = hs.http.get(amurl, nil)
 		getartwork()
