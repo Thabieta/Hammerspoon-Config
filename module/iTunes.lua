@@ -271,6 +271,6 @@ function setitunesbar()
 	hs.timer.doAfter(1, timerfunc)
 end
 setitunesbar()
-if iTunesBar ~= nil then
+--if iTunesBar ~= nil then
 	iTunesBar:setMenu(setmenu)
-end
+--end
