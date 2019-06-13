@@ -256,21 +256,19 @@ function updatemenubar()
 end
 -- 创建Menubar
 function setitunesbar()
---local function timerfunc()
-		if hs.itunes.isRunning() then -- 若iTunes正在运行
-			-- 若首次播放则新建menubar item
-			if iTunesBar == nil then
-				iTunesBar = hs.menubar.new()
-				iTunesBar:setTitle('🎵iTunes')
-			end
-			updatemenubar()
-		else -- 若iTunes没有运行
-			deletemenubar()
+	if hs.itunes.isRunning() then -- 若iTunes正在运行
+		-- 若首次播放则新建menubar item
+		if iTunesBar == nil then
+			iTunesBar = hs.menubar.new()
+			iTunesBar:setTitle('🎵iTunes')
 		end
---end
+		updatemenubar()
+	else -- 若iTunes没有运行
+		deletemenubar()
+	end
 	hs.timer.doAfter(1, setitunesbar)
 end
 setitunesbar()
---if iTunesBar ~= nil then
+if iTunesBar ~= nil then
 	iTunesBar:setMenu(setmenu)
---end
+end
