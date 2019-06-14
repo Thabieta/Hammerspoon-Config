@@ -270,5 +270,6 @@ function setitunesbar()
 end
 setitunesbar()
 if iTunesBar ~= nil then
+	settitle()
 	iTunesBar:setMenu(setmenu)
 end
