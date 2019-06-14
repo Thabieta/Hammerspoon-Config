@@ -233,6 +233,7 @@ function setmenu()
 		end
 		return iTunesBarMenu
 	end
+	settitle()
 	return iTunesBarMenu
 end
 -- 延迟函数
@@ -270,6 +271,5 @@ function setitunesbar()
 end
 setitunesbar()
 if iTunesBar ~= nil then
-	settitle()
 	iTunesBar:setMenu(setmenu)
 end
