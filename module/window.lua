@@ -32,8 +32,6 @@ function windowMeta.new()
 	self.resolution = self.screen:fullFrame()
 	self.windowFrame = self.window:frame()
 	self.screenFrame = self.screen:frame()
-	self.windowGrid = hs.grid.get(self.window)
-	self.screenGrid = hs.grid.getGrid(self.screen)
 	return self
 end
 -- 窗口动作
@@ -41,7 +39,8 @@ local Resize = {}
 Resize.halfleft = function ()
 	local this = windowMeta.new()
 	windowStash(this.window)
-	this.window:setFrame({x=this.resolution.x, y=this.resolution.y, w=this.resolution.w/2, h=this.resolution.h})
+	--this.window:setFrame({this.resolution.x, y=this.resolution.y, w=this.resolution.w/2, h=this.resolution.h})
+	this.window:move({0, 1/2, 1/2, 1})
 end
 Resize.halfright = function ()
 	local this = windowMeta.new()
