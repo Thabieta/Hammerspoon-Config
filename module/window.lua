@@ -39,23 +39,22 @@ local Resize = {}
 Resize.halfleft = function ()
 	local this = windowMeta.new()
 	windowStash(this.window)
-	--this.window:setFrame({this.resolution.x, y=this.resolution.y, w=this.resolution.w/2, h=this.resolution.h})
-	this.window:move({0, 1/2, 1/2, 1})
+	this.window:setFrame({this.screenFrame.x, this.screenFrame.y, this.screenFrame.w/2, this.screenFrame.h})
 end
 Resize.halfright = function ()
 	local this = windowMeta.new()
 	windowStash(this.window)
-	this.window:setFrame({x=this.resolution.x+this.resolution.w/2, y=this.resolution.y, w=this.resolution.w/2, h=this.resolution.h})
+	this.window:setFrame({this.screenFrame.x+this.screenFrame.w/2, this.screenFrame.y, this.screenFrame.w/2, this.screenFrame.h})
 end
 Resize.halfup = function ()
 	local this = windowMeta.new()
 	windowStash(this.window)
-	this.window:setFrame({x=this.resolution.x, y=this.resolution.y, w=this.resolution.w, h=this.resolution.h/2})
+	this.window:setFrame({this.screenFrame.x, this.screenFrame.y, this.screenFrame.w, this.screenFrame.h/2})
 end
 Resize.halfdown = function ()
 	local this = windowMeta.new()
 	windowStash(this.window)
-	this.window:setFrame({x=this.resolution.x, y=this.resolution.y+this.resolution.h/2, w=this.resolution.w, h=this.resolution.h/2})
+	this.window:setFrame({this.screenFrame.x, this.screenFrame.y+this.screenFrame.h/2, this.screenFrame.w, this.screenFrame.h/2})
 end
 Resize.fullscreen = function ()
 	local this = windowMeta.new()
