@@ -39,7 +39,7 @@ local script = [[tell application "Safari" to activate (open location "searchurl
 		urlscript = script:gsub("searchurl", search:query())
 	else
 		--hs.urlevent.openURLWithBundle(rowInfo["fullurl"], "com.apple.Safari")
-		urlscript = script:gsub("searchurl", "baidu.com")
+		urlscript = script:gsub("searchurl", rowInfo["fullurl"])
     	end
 	hs.osascript.applescript(urlscript)
 end
