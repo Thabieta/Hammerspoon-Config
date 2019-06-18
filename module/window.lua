@@ -75,21 +75,30 @@ Resize.reset = function ()
 		end
 	end
 end
+Resize.toleft = function ()
+	local this = windowMeta.new()
+	windowStash(this.window)
+	this.window:setFrame({0, 0, w=this.windowGrid.w, h=this.windowGrid.h})
+end
 hotkey = require "hs.hotkey"
 hyper = {"ctrl", "alt"}
-function windowsManagement(keyFuncTable)
+Hyper = {"ctrl", "alt", "command"}
+function windowsManagement(hyperkey,keyFuncTable)
 	for key,fn in pairs(keyFuncTable) do
-		hotkey.bind(hyper, key, fn)
+		hotkey.bind(hyperkey, key, fn)
 	end
 end
 hotkey.bind(hyper, 'return', Resize.fullscreen)
-windowsManagement({
+windowsManagement(hyper,{
 		left = Resize.halfleft,
 		right = Resize.halfright,
 		up = Resize.halfup,
 		down = Resize.halfdown,
 		c = Resize.center,
 		delete = Resize.reset,
+	})
+windowsManagement(Hyper,{
+		left = Resize.toleft,
 	})
 --[[
 -- 撤销最近一次动作
