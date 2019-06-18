@@ -30,6 +30,7 @@ function windowMeta.new()
 	self.window = hs.window.focusedWindow()
 	self.screen = self.window:screen()
 	self.resolution = self.screen:fullFrame()
+	self.windowFrame = self.window:frame()
 	self.windowGrid = hs.grid.get(self.window)
 	self.screenGrid = hs.grid.getGrid(self.screen)
 	return self
@@ -78,7 +79,7 @@ end
 Resize.toleft = function ()
 	local this = windowMeta.new()
 	windowStash(this.window)
-	this.window:move({0,0,1/2,1/2})
+	this.window:move({0,0,this.window:frame.w,this.window:frame.h})
 end
 hotkey = require "hs.hotkey"
 hyper = {"ctrl", "alt"}
