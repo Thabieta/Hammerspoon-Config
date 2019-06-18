@@ -32,6 +32,8 @@ function windowMeta.new()
 	self.resolution = self.screen:fullFrame()
 	self.windowFrame = self.window:frame()
 	self.screenFrame = self.screen:frame()
+	self.windowGrid = hs.grid.get(self.window)
+	self.screenGrid = hs.grid.getGrid(self.screen)
 	return self
 end
 -- 窗口动作
