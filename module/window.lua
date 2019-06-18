@@ -93,7 +93,7 @@ end
 Resize.todown = function ()
 	local this = windowMeta.new()
 	windowStash(this.window)
-	this.window:move({this.windowFrame.x,this.screenFrame.h-this.windowFrame.h,this.windowFrame.w,this.windowFrame.h})
+	this.window:move({this.windowFrame.x,this.resolution.h-this.windowFrame.h,this.windowFrame.w,this.windowFrame.h})
 end
 hotkey = require "hs.hotkey"
 hyper = {"ctrl", "alt"}
