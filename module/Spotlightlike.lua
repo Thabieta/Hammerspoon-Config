@@ -31,13 +31,17 @@ function searchList()
 end
 -- 执行的动作
 function searchcompletionCallback(rowInfo)
+local script = [[tell application "Safari" to activate (open location "searchurl")]]
 	if rowInfo == nil or string.len(search:query()) == 0 then
         	return
 	elseif string.find(search:query(), "://") ~= nil or string.find(search:query(), "www.") ~= nil or string.find(search:query(), ".com") ~= nil or string.find(search:query(), ".jp") ~= nil then
-		hs.urlevent.openURLWithBundle(search:query(), "com.apple.Safari")
+		--hs.urlevent.openURLWithBundle(search:query(), "com.apple.Safari")
+		urlscript = script:gsub("searchurl", search:query())
 	else
-		hs.urlevent.openURLWithBundle(rowInfo["fullurl"], "com.apple.Safari")
+		--hs.urlevent.openURLWithBundle(rowInfo["fullurl"], "com.apple.Safari")
+		urlscript = script:gsub("searchurl", rowInfo["fullurl"])
     	end
+	hs.osascript.applescript(urlscript)
 end
 -- 搜索关键词改变时的行为
 function queryChangedCallback()
