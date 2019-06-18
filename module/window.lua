@@ -85,6 +85,16 @@ Resize.toright = function ()
 	windowStash(this.window)
 	this.window:move({this.screenFrame.w-this.windowFrame.w,(this.screenFrame.h-this.windowFrame.h)/2,this.windowFrame.w,this.windowFrame.h})
 end
+Resize.toup = function ()
+	local this = windowMeta.new()
+	windowStash(this.window)
+	this.window:move({this.windowFrame.x,0,this.windowFrame.w,this.windowFrame.h})
+end
+Resize.todown = function ()
+	local this = windowMeta.new()
+	windowStash(this.window)
+	this.window:move({this.windowFrame.x,this.screenFrame.h-this.windowFrame.h,this.windowFrame.w,this.windowFrame.h})
+end
 hotkey = require "hs.hotkey"
 hyper = {"ctrl", "alt"}
 Hyper = {"ctrl", "alt", "command"}
@@ -105,6 +115,8 @@ windowsManagement(hyper,{
 windowsManagement(Hyper,{
 		left = Resize.toleft,
 		right = Resize.toright,
+		up = Resize.toup,
+		down = Resize.todown,
 	})
 --[[
 -- 撤销最近一次动作
