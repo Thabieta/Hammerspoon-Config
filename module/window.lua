@@ -78,7 +78,7 @@ end
 Resize.toleft = function ()
 	local this = windowMeta.new()
 	windowStash(this.window)
-	this.window:setFrame({0, 0, w=this.windowGrid.w, h=this.windowGrid.h})
+	this.window:setFrame({x=this.windowGrid.x, y=this.windowGrid.y, w=this.windowGrid.w, h=this.windowGrid.h})
 end
 hotkey = require "hs.hotkey"
 hyper = {"ctrl", "alt"}
