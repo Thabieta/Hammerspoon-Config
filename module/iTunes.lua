@@ -269,7 +269,7 @@ function setitunesbar()
 	end
 	--hs.timer.doAfter(1, setitunesbar)
 end
-hs.timer.doEvery(1, setitunesbar)
 if iTunesBar ~= nil then
 	iTunesBar:setMenu(setmenu)
 end
+hs.timer.doEvery(1, setitunesbar)
